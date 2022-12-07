@@ -17,4 +17,4 @@ typedef struct sensorsdataCDT {
     sense * vec;
     size_t size; // Cantidad de memoria reservada en el heap
     unsigned int dim; // Cantidad de sensores
-} sensorsCDT;
+} sensorsdataCDT;
