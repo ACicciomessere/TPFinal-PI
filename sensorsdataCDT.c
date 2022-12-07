@@ -1,18 +1,26 @@
 #include "sensorsdataCDT.h"
 
-typedef struct data{
-  unsigned int year;
-  unsigned int Mdate;
-  char * day;   // hacer un enum para guardarlo como numero
-  int hourly_counts;
-}data;
-
-typedef struct sensors{
+typedef struct query1 {
   char * name;
-  char status;
-}sensors;
+  size_t count;
+  size_t dim;
+} query1;
 
-typedef struct sensorsdataCDT{
-  data * vecD;
-  sensors * vecS;
-}sensorsdataCDT;
+typedef struct query2 {
+  size_t countweek;
+  size_t countweekend;
+  int anio;
+  size_t dim;
+} query2;
+
+typedef struct query3 {
+  int year;
+  size_t cantPeatones;
+  size_t dim;
+} query3;
+
+typedef struct sensorsdataCDT {
+  query1 * vecQ1;
+  query2 * vecQ2;
+  query3 * vecQ3;
+} sensorsdataCDT;
