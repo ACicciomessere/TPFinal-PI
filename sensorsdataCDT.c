@@ -10,6 +10,7 @@ typedef struct Q2 {
 typedef struct sensor {
    char * name; // En caso de que el sensor no exista, o este removido, name estara en NULL
    unsigned long int countTotal; // Cantidad total de peatones registrados por el sensor
+   Q2 * last; // Iterador
    Q2 * first; // Puntero al primer elemento de una lista que contiene los datos divididos por anio 
 } sensor;
 
@@ -38,8 +39,8 @@ void orderByPeopleAmount(sensorsdataADT sensors) {
       qsort(sensors->vec, sensors->size, sizeof(sensor), cmpPeopleAmount);
 }
 
-int getSensorsAmount(sensorsdataADT sensors) {
-      return sensors->dim;
+int getSensorSize(sensorsdataADT sensors) {
+      return sensors->size;
 }
 
 char * getSensorName(sensorsADT sensors, int i) {
@@ -66,10 +67,7 @@ void toBegin(sensorsADT sensors) {
 }
 
 int hasNext(sensorsADT sensors) {
-      if(sensors->vec[i].last != NULL) {
-            return 1;
-      }
-      return 0;
+      return sensors->vec[i].last != NULL;
 }
 
 void next(sensorsADT sensors, int i) {
