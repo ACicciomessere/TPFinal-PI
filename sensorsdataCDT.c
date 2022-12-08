@@ -80,6 +80,7 @@ unsigned long int getTotalDaysCount(sensorsADT sensors, int year,unsigned long i
             if(sensors->vec[i].name != NULL && sensors->vec[i].last->year == year) {
                   *week += sensors->vec[i].last->countWeek;
                   *weekEnd += sensors->vec[i].last->countEnd;
+                  sensors->vec[i].last=sensors->vec[i].last->next;
             }
       }
       return *weekEnd+*week;
