@@ -19,9 +19,9 @@ En el caso de que un sensor no este activo, entonces retorna 0.
 size_t getPedestriansBySensor(sensorsdataADT sensor, int i);
 
 /*
-Retorna la cantidad total de sensores activos.
+Retorna la cantidad posiciones reservadas en el heap para el vector.
 */
-int getSensorsAmount(sensorsdataADT sensors);
+int getSensorSize(sensorsdataADT sensors);
 
 /*
 Retorna el nombre del sensor. (i >= 0).
