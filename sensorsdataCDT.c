@@ -89,7 +89,12 @@ unsigned long int getTotalDaysCount(sensorsdataADT sensors, int year,unsigned lo
 // Query 3
 
 #define DIAS_ANIO 365
+int isLeap(int year){//Checkea si un anio es bisiesto
+    if(year%100==0)
+        return(year%400==0)
+    return(year%4==0)
+}
 
 unsigned long double getTotalDaysProm(sensorsADT sensors, int i, int year) {
-      return getTotalDaysCount(sensors, i, year) / DIAS_ANIO; //Revisar el tema de anio bisiesto
+      return getTotalDaysCount(sensors, i, year) / DIAS_ANIO+isLeap(year); //Revisar el tema de anio bisiesto
 }
