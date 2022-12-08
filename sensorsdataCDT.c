@@ -19,6 +19,12 @@ typedef struct sensorsdataCDT {
     unsigned int dim; // Cantidad de sensores
 } sensorsdataCDT;
 
+sensorsdataADT newSensorsADT(){
+    return calloc( 1, sizeof( sensordataCDT ) );
+    void newSensor( sensordataADT sensor, int id, char * name, int anio, int Mdate,
+    day = date;    // hay que agarrar y agregar si el vector esta en NULL o si el año no esta en la lista. Si el año esta entonces hay que sumarle a donde corresponda
+}
+
 static int cmpPeopleAmount(sensor * a, sensor * b) {
       int c;
       if((c = a->countTotal - b->countTotal) == 0) { // Entonces definimos por nombre del sensor
