@@ -1,4 +1,16 @@
-int main() {
+#include "sensorsdataCDT.c"
+
+int main( int argCant, char * args[] ) {
+      if( argCant != 3 || argCant != 7 ){
+            frpintf( stderr, 'ERROR en cantidad de datos introducidos' );
+            exit(1);
+      }
+      FILE * sensores = fopen( args[1], "r" );
+      FILE * mediciones = fopen( args[2], "r" );
+      if( sensores == NULL || mediociones == NULL ){
+            fprintf( stderr, 'ERROR en encontrar los datos' );
+            exit(2);
+      }
       sensorsADT sensors = newSensorsADT();
 
       int sensorSize = getSensorSize(sensors);
