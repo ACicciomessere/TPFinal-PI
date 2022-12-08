@@ -8,13 +8,13 @@ typedef struct Q2 {
 } Q2;
 
 typedef struct sensor {
-   char * name;
+   char * name; // En caso de que el sensor no exista, o este removido, name estara en NULL
    unsigned long int countTotal; // Cantidad total de peatones registrados por el sensor
    Q2 * first; // Puntero al primer elemento de una lista que contiene los datos divididos por anio 
-} sense;
+} sensor;
 
 typedef struct sensorsdataCDT { 
-    sense * vec;
-    size_t size; // Cantidad de memoria reservada en el heap
+    sensor * vec;
+    size_t size; // Cantidad de memoria reservada en el heap para el vector
     unsigned int dim; // Cantidad de sensores
 } sensorsdataCDT;
