@@ -1,9 +1,9 @@
 #include "sensorsdataCDT.h"
 
 typedef struct Q2 { 
-    int anio;
+    int year;
     unsigned int countWeek;
-    unsigned int countWeekEnd;
+    unsigned int countEnd;
     struct Q2 * tail;
 } Q2;
 
@@ -18,3 +18,63 @@ typedef struct sensorsdataCDT {
     size_t size; // Cantidad de memoria reservada en el heap para el vector
     unsigned int dim; // Cantidad de sensores
 } sensorsdataCDT;
+
+static int cmpPeopleAmount(sensor * a, sensor * b) {
+      int c;
+      if((c = a->countTotal - b->countTotal) == 0) { // Entonces definimos por nombre del sensor
+            if(a->name != NULL && b->name != NULL) {
+                  return strcasemp(a->name, b->name);
+            }
+            // en el caso de que ambos sean NULL entonces retorna 0 ya que da igual el orden entre ambos sensores, misma situacion en el caso de que alguno de los 2 sea NULL debido a que a la hora de obtener cualquier tipo de informacion no seran tomados en cuenta aquellos sensores cuyo nombre este en NULL
+      }
+      return c;
+}
+
+void orderByPeopleAmount(sensorsdataADT sensors) {
+      qsort(sensors->vec, sensors->size, sizeof(sensor), cmpPeopleAmount);
+}
+
+int getSensorsAmount(sensorsdataADT sensors) {
+      return sensors->dim;
+}
+
+char * getSensorName(sensorsADT sensors, int i) {
+      return sensor->vec[i].name;
+}
+
+size_t getPedestriansBySensor(sensorsdataADT sensor, int i) { // i >= 0
+      if(sensor->vec[i].name != NULL) {
+            return sensor->vec[i].countTotal;
+      }
+      return 0;
+}
+
+// Query 2
+
+int getMaxYear(sensorsADT sensors) {
+      return sensors->maxYear;
+}
+
+void toBegin(sensorsADT sensors) {
+      for(int i = 0; i < sensors->size; i++) {
+            sensors->vec[i].last = sensors->vec[i].first;
+      }
+}
+
+unsigned long int getWeekDaysCount(sensorsADT sensors, int i, int year) {
+      unsigned long int ans = 0;
+      for(int i = 0; i < sensors->size; i++) {
+            if(sensors->vec[i].last->year == year) {
+                  ans += sensors->vec[i].last->countWeek;
+            }
+            sensors->vec[i].last = sensors->vec[i].first;
+      }
+}
+
+unsigned long int getWeekendsDaysCount(sensorsADT sensors, int i, int year);
+
+unsigned long int getTotalDaysCount(sensorsADT sensors, int i, int year);
+
+// Query 3
+
+unsigned long double getTotalDaysProm(sensorsADT sensors, int i, int year);
