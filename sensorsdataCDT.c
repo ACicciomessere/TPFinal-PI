@@ -74,30 +74,15 @@ void next(sensorsADT sensors, int i) {
       sensors->vec[i].last = sensors->vec[i].last->tail;
 }
 
-unsigned long int getWeekDaysCount(sensorsADT sensors, int i, int year) {
+unsigned long int getTotalDaysCount(sensorsADT sensors, int year,unsigned long int*weekEnd, unsigned long int*week) {
       unsigned long int ans = 0;
       for(int i = 0; i < sensors->size; i++) {
             if(sensors->vec[i].name != NULL && sensors->vec[i].last->year == year) {
-                  ans += sensors->vec[i].last->countWeek;
+                  *week += sensors->vec[i].last->countWeek;
+                  *weekEnd += sensors->vec[i].last->countEnd;
             }
       }
-
-      return ans;
-}
-
-unsigned long int getWeekendsDaysCount(sensorsADT sensors, int i, int year) {
-      unsigned long int ans = 0;
-      for(int i = 0; i < sensors->size; i++) {
-            if(sensors->vec[i].name != NULL && sensors->vec[i].last->year == year) {
-                  ans += sensors->vec[i].last->countEnd;
-            }
-      }
-
-      return ans;
-}
-
-unsigned long int getTotalDaysCount(sensorsADT sensors, int i, int year) {
-      return getWeekendsDaysCount(sensors, i, year) + getWeekDaysCount(sensors, i, year);
+      return *weekEnd+*week;
 }
 
 // Query 3
