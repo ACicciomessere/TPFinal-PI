@@ -66,21 +66,21 @@ void toBegin(sensorsADT sensors) {
       }
 }
 
-int hasNext(sensorsADT sensors) {
-      return sensors->vec[i].last != NULL;
+int hasNext(sensor sns) {
+      return sns.last != NULL;
 }
 
-void next(sensorsADT sensors, int i) {
-      sensors->vec[i].last = sensors->vec[i].last->tail;
+void next(sensor sns, int i) {
+      sns.last = sns.last->tail;
 }
 
-unsigned long int getTotalDaysCount(sensorsADT sensors, int year,unsigned long int*weekEnd, unsigned long int*week) {
+unsigned long int getTotalDaysCount(sensorsdataADT sensors, int year,unsigned long int*weekEnd, unsigned long int*week) {
       unsigned long int ans = 0;
       for(int i = 0; i < sensors->size; i++) {
             if(sensors->vec[i].name != NULL && sensors->vec[i].last->year == year) {
                   *week += sensors->vec[i].last->countWeek;
                   *weekEnd += sensors->vec[i].last->countEnd;
-                  sensors->vec[i].last=sensors->vec[i].last->next;
+                  next(sensor->vec[i]);
             }
       }
       return *weekEnd+*week;
