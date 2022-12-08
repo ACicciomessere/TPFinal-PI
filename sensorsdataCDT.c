@@ -70,7 +70,7 @@ int hasNext(sensor sns) {
       return sns.last != NULL;
 }
 
-void next(sensor sns, int i) {
+void next(sensor sns) {
       sns.last = sns.last->tail;
 }
 
