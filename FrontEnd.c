@@ -25,7 +25,7 @@ int main() {
             fprintf(...);
             weekEnds=0;
             weekDays=0;
-            year -= 1;
+            year--;
       }
 
       return 0;
