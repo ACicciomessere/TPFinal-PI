@@ -21,8 +21,6 @@ typedef struct sensorsdataCDT {
 
 sensorsdataADT newSensorsADT(){
     return calloc( 1, sizeof( sensordataCDT ) );
-    void newSensor( sensordataADT sensor, int id, char * name, int anio, int Mdate,
-    day = date;    // hay que agarrar y agregar si el vector esta en NULL o si el año no esta en la lista. Si el año esta entonces hay que sumarle a donde corresponda
 }
 
 static int cmpPeopleAmount(sensor * a, sensor * b) {
@@ -70,11 +68,12 @@ void toBegin(sensorsADT sensors) {
 unsigned long int getWeekDaysCount(sensorsADT sensors, int i, int year) {
       unsigned long int ans = 0;
       for(int i = 0; i < sensors->size; i++) {
-            if(sensors->vec[i].last->year == year) {
+            if(sensors->vec[i].name != NULL && sensors->vec[i].last->year == year) {
                   ans += sensors->vec[i].last->countWeek;
             }
-            sensors->vec[i].last = sensors->vec[i].first;
       }
+
+      return ans;
 }
 
 unsigned long int getWeekendsDaysCount(sensorsADT sensors, int i, int year);
