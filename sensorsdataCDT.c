@@ -65,6 +65,17 @@ void toBegin(sensorsADT sensors) {
       }
 }
 
+int hasNext(sensorsADT sensors) {
+      if(sensors->vec[i].last != NULL) {
+            return 1;
+      }
+      return 0;
+}
+
+void next(sensorsADT sensors, int i) {
+      sensors->vec[i].last = sensors->vec[i].last->tail;
+}
+
 unsigned long int getWeekDaysCount(sensorsADT sensors, int i, int year) {
       unsigned long int ans = 0;
       for(int i = 0; i < sensors->size; i++) {
@@ -76,10 +87,25 @@ unsigned long int getWeekDaysCount(sensorsADT sensors, int i, int year) {
       return ans;
 }
 
-unsigned long int getWeekendsDaysCount(sensorsADT sensors, int i, int year);
+unsigned long int getWeekendsDaysCount(sensorsADT sensors, int i, int year) {
+      unsigned long int ans = 0;
+      for(int i = 0; i < sensors->size; i++) {
+            if(sensors->vec[i].name != NULL && sensors->vec[i].last->year == year) {
+                  ans += sensors->vec[i].last->countEnd;
+            }
+      }
 
-unsigned long int getTotalDaysCount(sensorsADT sensors, int i, int year);
+      return ans;
+}
+
+unsigned long int getTotalDaysCount(sensorsADT sensors, int i, int year) {
+      return getWeekendsDaysCount(sensors, i, year) + getWeekDaysCount(sensors, i, year);
+}
 
 // Query 3
 
-unsigned long double getTotalDaysProm(sensorsADT sensors, int i, int year);
+#define DIAS_ANIO 365
+
+unsigned long double getTotalDaysProm(sensorsADT sensors, int i, int year) {
+      return getTotalDaysCount(sensors, i, year) / DIAS_ANIO; //Revisar el tema de anio bisiesto
+}
