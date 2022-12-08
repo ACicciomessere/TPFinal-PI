@@ -32,7 +32,7 @@ int main( int argCant, char * args[] ) {
       unsigned long int weekEnds=0;
       unsigned long int yearTotal=1;//Tentativo, va a estar la funcion adentro del fprintf como valor numerico
       //el print va a tener: el anio, va a tener dias de semana, dias de fin de semana, y total
-      for(int i = 0; !hasNext(sensors); next(sensors, i), i++) {//Planteo la condicion de salida que total=0;
+      for(int i = 0; !hasNext(sensors); i++) {//Planteo la condicion de salida que total=0;
             yearTotal=getTotalCount(sensors,year,&weekEnds,&weekDays);
             fprintf(...);
             weekEnds=0;
