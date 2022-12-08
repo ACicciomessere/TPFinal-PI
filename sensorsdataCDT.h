@@ -19,9 +19,9 @@ En el caso de que un sensor no este activo, entonces retorna 0.
 size_t getPedestriansBySensor(sensorsdataADT sensor, int i);
 
 /*
-Retorna la cantidad total de sensores activos.
+Retorna la cantidad posiciones reservadas en el heap para el vector.
 */
-int getSensorsAmount(sensorsdataADT sensors);
+int getSensorSize(sensorsdataADT sensors);
 
 /*
 Retorna el nombre del sensor. (i >= 0).
@@ -36,6 +36,16 @@ char * getSensorName(sensorsADT sensors, int i);
 Para inicializar el puntero al ultimo elemento en el cual nos paramos. Es necesario para que las funciones tengan la mayor eficiencia posible. Se debe utilizar previo a realizar cualquier llamado a una funcion relacionada a query 2 o query 3.
 */
 void toBegin(sensorsADT sensors);
+
+/*
+Retorna 1 en caso de que se pueda actualizar la posicion del elemento, 0 si no
+*/
+int hasNext(sensorsADT sensors);
+
+/*
+Actualiza la posicion del elemento en el cual estamos parados
+*/
+void next(sensorsADT sensors);
 
 /*
 Retorna el ultimo anio en el que se hayan realizado mediciones
@@ -58,10 +68,6 @@ Retorna la cantidad de peatones que se registraron en un anio completo. (i >= 0)
 unsigned long int getTotalDaysCount(sensorsADT sensors, int i, int year);
 
 // Query 3
-
-// Se reutiliza la funcion getYear del query 2
-
-// Se reutiliza la funcion getTotalDaysCount del query 2
 
 /*
 Retorna la cantidad total de peatones que se registraron en un anio completo dividido la cantidad de dias del anio. (i >= 0).

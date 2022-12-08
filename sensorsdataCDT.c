@@ -10,6 +10,7 @@ typedef struct Q2 {
 typedef struct sensor {
    char * name; // En caso de que el sensor no exista, o este removido, name estara en NULL
    unsigned long int countTotal; // Cantidad total de peatones registrados por el sensor
+   Q2 * last; // Iterador
    Q2 * first; // Puntero al primer elemento de una lista que contiene los datos divididos por anio 
 } sensor;
 
@@ -38,8 +39,8 @@ void orderByPeopleAmount(sensorsdataADT sensors) {
       qsort(sensors->vec, sensors->size, sizeof(sensor), cmpPeopleAmount);
 }
 
-int getSensorsAmount(sensorsdataADT sensors) {
-      return sensors->dim;
+int getSensorSize(sensorsdataADT sensors) {
+      return sensors->size;
 }
 
 char * getSensorName(sensorsADT sensors, int i) {
@@ -65,21 +66,30 @@ void toBegin(sensorsADT sensors) {
       }
 }
 
-unsigned long int getWeekDaysCount(sensorsADT sensors, int i, int year) {
+int hasNext(sensor sns) {
+      return sns.last != NULL;
+}
+
+void next(sensor sns, int i) {
+      sns.last = sns.last->tail;
+}
+
+unsigned long int getTotalDaysCount(sensorsdataADT sensors, int year,unsigned long int*weekEnd, unsigned long int*week) {
       unsigned long int ans = 0;
       for(int i = 0; i < sensors->size; i++) {
             if(sensors->vec[i].name != NULL && sensors->vec[i].last->year == year) {
-                  ans += sensors->vec[i].last->countWeek;
+                  *week += sensors->vec[i].last->countWeek;
+                  *weekEnd += sensors->vec[i].last->countEnd;
+                  next(sensor->vec[i]);
             }
       }
-
-      return ans;
+      return *weekEnd+*week;
 }
-
-unsigned long int getWeekendsDaysCount(sensorsADT sensors, int i, int year);
-
-unsigned long int getTotalDaysCount(sensorsADT sensors, int i, int year);
 
 // Query 3
 
-unsigned long double getTotalDaysProm(sensorsADT sensors, int i, int year);
+#define DIAS_ANIO 365
+
+unsigned long double getTotalDaysProm(sensorsADT sensors, int i, int year) {
+      return getTotalDaysCount(sensors, i, year) / DIAS_ANIO; //Revisar el tema de anio bisiesto
+}
