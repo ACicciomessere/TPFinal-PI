@@ -77,7 +77,7 @@ void next(sensor sns) {
 unsigned long int getTotalDaysCount(sensorsdataADT sensors, int year,unsigned long int*weekEnd, unsigned long int*week) {
       unsigned long int ans = 0;
       for(int i = 0; i < sensors->size; i++) {
-            if(sensors->vec[i].name != NULL && sensors->vec[i].last->year == year) {
+            if(sensors->vec[i].name != NULL && hasNext(sensors->vec[i]) && sensors->vec[i].last->year == year) {
                   *week += sensors->vec[i].last->countWeek;
                   *weekEnd += sensors->vec[i].last->countEnd;
                   next(sensor->vec[i]);
