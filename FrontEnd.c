@@ -11,7 +11,7 @@ int main( int argCant, char * args[] ) {
             fprintf( stderr, 'ERROR en encontrar los datos' );
             exit(2);
       }
-      sensorsADT sensors = newSensorsADT();
+      sensorsdataADT sensors = newSensorsADT();
 
       int sensorSize = getSensorSize(sensors);
       
