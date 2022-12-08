@@ -38,6 +38,16 @@ Para inicializar el puntero al ultimo elemento en el cual nos paramos. Es necesa
 void toBegin(sensorsADT sensors);
 
 /*
+Retorna 1 en caso de que se pueda actualizar la posicion del elemento, 0 si no
+*/
+int hasNext(sensorsADT sensors);
+
+/*
+Actualiza la posicion del elemento en el cual estamos parados
+*/
+void next(sensorsADT sensors);
+
+/*
 Retorna el ultimo anio en el que se hayan realizado mediciones
 */
 int getMaxYear(sensorsADT sensors);
@@ -58,10 +68,6 @@ Retorna la cantidad de peatones que se registraron en un anio completo. (i >= 0)
 unsigned long int getTotalDaysCount(sensorsADT sensors, int i, int year);
 
 // Query 3
-
-// Se reutiliza la funcion getYear del query 2
-
-// Se reutiliza la funcion getTotalDaysCount del query 2
 
 /*
 Retorna la cantidad total de peatones que se registraron en un anio completo dividido la cantidad de dias del anio. (i >= 0).
