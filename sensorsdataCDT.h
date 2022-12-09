@@ -36,6 +36,26 @@ char * getSensorName(sensorsdataADT sensors, int i);
 //Para que las funciones puedan realizarse de orden 1 es necesario poner un puntero al ultimo elemento de la lista que recorrimos
 
 /*
+Retorna el anio en el cual estas parado
+*/
+int getYear(sensorsdataADT sensors);
+
+/*
+Retorna la cantidad de peatones registrados durante dias de semana en el anio en el que estas parado
+*/
+unsigned long int getWeekCount(sensorsdataADT sensors);
+
+/*
+Retorna la cantidad de peatones registrados durante dias de fin de semana en el anio en el que estas parado
+*/
+unsigned long int getCountEnd(sensorsdataADT sensors);
+
+/*
+Retorna la cantidad total de peatones registrados en un mismo anio
+*/
+unsigned long int getTotalCount(sensorsdataADT sensors);
+
+/*
 Para inicializar el puntero al ultimo elemento en el cual nos paramos. Es necesario para que las funciones tengan la mayor eficiencia posible. Se debe utilizar previo a realizar cualquier llamado a una funcion relacionada a query 2 o query 3.
 */
 void toBegin(sensorsdataADT sensors);
