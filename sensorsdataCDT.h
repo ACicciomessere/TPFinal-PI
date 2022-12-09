@@ -2,7 +2,7 @@
 #define TPFINAL_PI_SENSORSDATACDT_H
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <strings.h>
 #include "htmlTable.h"
 #define MAX_LEN 128
 #define MAX_DIG 11
