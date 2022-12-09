@@ -7,21 +7,21 @@ int main( int argCant, char * args[] ) {
         fprintf( stderr, "ERROR en cantidad de datos introducidos\n" );
         exit(1);
     }
-    
+
     FILE * mediciones = fopen( args[1], "r" );
     FILE * sensores = fopen( args[2], "r" );
-    
+
     if( sensores == NULL || mediciones == NULL ){
         fprintf( stderr,"ERROR en encontrar los datos\n" );
         exit(2);
     }
-    
+
     sensorsdataADT sensors = newSensorsDataADT();
     if( sensors == NULL ){
         memError();
     }
 
-    char currLine[ MAX_LEN ];    
+    char currLine[ MAX_LEN ];
     fgets( currLine, MAX_LEN, sensores );
     while( fgets( currLine, MAX_LEN, sensores ) ){
         if( addSensor(sensors, currLine) )
@@ -35,9 +35,9 @@ int main( int argCant, char * args[] ) {
             memError();
     }
     fclose( mediciones );
-    
+
     unsigned int sensorSize = getSensorSize(sensors);
-    
+
     FILE * query1 = fopen("query1.csv", "wt");
     FILE * query2 = fopen("query2.csv", "wt");
     FILE * query3 = fopen("query3.csv", "wt");
@@ -48,12 +48,12 @@ int main( int argCant, char * args[] ) {
     fputs("Sensor;Pedestrians\n", query1);
     fputs("Year;Weekdays_Count;Weekends_Count;Total_Count\n", query2);
     fputs("Year;Pedestrians_Avg\n", query3);
-    
+
     char sAux[MAX_DIG];
     char sAux2[MAX_DIG];
     char sAux3[MAX_DIG];
     char sAux4[MAX_DIG];
-    
+
     //Query 1
     orderByPeopleAmount(sensors);
     htmlTable htmlQ1 = newTable("query1", 2, "Sensor", "Pedestrians");
@@ -95,7 +95,7 @@ int main( int argCant, char * args[] ) {
     while(hasNext(sensors)){
         year = getYear(sensors);
         yearAvg = getYearAvg(sensors->idx);
-        fprintf( query3, "%i;%lf\n", year, yearAvg);   //sensors->idx->year;getYearAvg(sensors->idx)
+        fprintf( query3, "%i;%.2lf\n", year, yearAvg);   //sensors->idx->year;getYearAvg(sensors->idx)
         itoa(year, sAux, 10);
         itoa(yearAvg, sAux2, 10);
         addHTMLRow(htmlQ3, sAux, sAux2 );
@@ -110,12 +110,12 @@ int main( int argCant, char * args[] ) {
     //    fprintf(...);//Printeado a Query2.csv y Q2.html: sensors->idx->year;getYearAvg(sensors->idx)
     //    next(sensors);
     // }
-    
+
     freeAll(sensors);
     fclose(query1);
     fclose(query2);
     fclose(query3);
-    
+
     return 0;
 }
 
