@@ -51,10 +51,10 @@ int main( int argCant, char * args[] ) {
     fputs("Year;Weekdays_Count;Weekends_Count;Total_Count\n", query2);
     fputs("Year;Pedestrians_Avg\n", query3);
     
-    char sTotalPed[MAX_DIG];
-    char sTotalPed2[MAX_DIG];
-    char sTotalPed3[MAX_DIG];
-    char sTotalPed4[MAX_DIG];
+    char sAux[MAX_DIG];
+    char sAux2[MAX_DIG];
+    char sAux3[MAX_DIG];
+    char sAux4[MAX_DIG];
     
     //Query 1
     orderByPeopleAmount(sensors);
@@ -63,10 +63,10 @@ int main( int argCant, char * args[] ) {
     for(int i = 0; i < sensorSize; i++) {
         char * name = getSensorName(sensors, i);
         if(name != NULL) {
-            fprintf( query1, "%s;%lu\n", name, totalPedestrians );   //TODO: name;sensors->vec[i].count
             unsigned long int totalPedestrians = getPedestriansBySensor(sensors, i);
-            itoa(totalPedestrians, sTotalPed, 10);
-            addHTMLRow(htmlQ1, name, sTotalPed );
+            fprintf( query1, "%s;%lu\n", name, totalPedestrians );   //TODO: name;sensors->vec[i].count
+            itoa(totalPedestrians, sAux, 10);
+            addHTMLRow(htmlQ1, name, sAux );
         }
     }
     closeHTMLTable(htmlQ1);
@@ -82,11 +82,11 @@ int main( int argCant, char * args[] ) {
         endCount = getCountEnd(sensors);
         totalCount = getTotalCount(sensors);
         fprintf( query2, "%i;%lu;%lu;%lu\n", year , weekCount , endCount, totalCount );  //sensors->idx->year;sensors->idx->countWeek;sensors->idx->countEnd;sensors->idx->countEnd+sensors->idx->countWeek
-        itoa(year, sTotalPed, 10);
-        itoa(weekCount, sTotalPed2, 10);
-        itoa(endCount, sTotalPed3, 10);
-        itoa(totalCount, sTotalPed4, 10);
-        addHTMLRow(htmlQ2, sTotalPed, sTotalPed2, sTotalPed3, sTotalPed4 );
+        itoa(year, sAux, 10);
+        itoa(weekCount, sAux2, 10);
+        itoa(endCount, sAux3, 10);
+        itoa(totalCount, sAux4, 10);
+        addHTMLRow(htmlQ2, sAux, sAux2, sAux3, sAux4 );
         next(sensors);
     }
     closeHTMLTable(htmlQ2);
@@ -94,14 +94,14 @@ int main( int argCant, char * args[] ) {
     //Query 3
     toBegin(sensors);
     long double yearAvg;
-    htmlTable htmlQ1 = newTable("query3", 2, "Year", "Pedestrians_Avg");
+    htmlTable htmlQ3 = newTable("query3", 2, "Year", "Pedestrians_Avg");
     while(hasNext(sensors)){
         year = getYear(sensors);
         yearAvg = getYearAvg(sensors->idx);
         fprintf( query3, "%i;%lf\n", year, yearAvg) );   //sensors->idx->year;getYearAvg(sensors->idx)
-        itoa(year, sTotalPed, 10);
-        itoa(yearAvg, sTotalPed2, 10);
-        addHTMLRow(htmlQ3, sTotalPed, sTotalPed2 );
+        itoa(year, sAux, 10);
+        itoa(yearAvg, sAux2, 10);
+        addHTMLRow(htmlQ3, sAux, sAux2 );
         next(sensors);
     }
     closeHTMLTable(htmlQ3);
