@@ -1,7 +1,11 @@
 #ifndef TPFINAL_PI_SENSORSDATACDT_H
 #define TPFINAL_PI_SENSORSDATACDT_H
-
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#define MAX_LEN 128
 typedef struct sensorsdataCDT* sensorsdataADT;
+typedef struct years*yList;
 
 sensorsdataADT newSensorsDataADT(void);
 
@@ -21,57 +25,35 @@ size_t getPedestriansBySensor(sensorsdataADT sensor, int i);
 /*
 Retorna la cantidad posiciones reservadas en el heap para el vector.
 */
-int getSensorSize(sensorsdataADT sensors);
+unsigned int getSensorSize(sensorsdataADT sensors);
 
 /*
 Retorna el nombre del sensor. (i >= 0).
 */
-char * getSensorName(sensorsADT sensors, int i);
+char * getSensorName(sensorsdataADT sensors, int i);
 
-// Query 2
-
+//Query 2 y 3
 //Para que las funciones puedan realizarse de orden 1 es necesario poner un puntero al ultimo elemento de la lista que recorrimos
 
 /*
 Para inicializar el puntero al ultimo elemento en el cual nos paramos. Es necesario para que las funciones tengan la mayor eficiencia posible. Se debe utilizar previo a realizar cualquier llamado a una funcion relacionada a query 2 o query 3.
 */
-void toBegin(sensorsADT sensors);
+void toBegin(sensorsdataADT sensors);
 
 /*
 Retorna 1 en caso de que se pueda actualizar la posicion del elemento, 0 si no
 */
-int hasNext(sensorsADT sensors);
+int hasNext(sensorsdataADT sensors);
 
 /*
 Actualiza la posicion del elemento en el cual estamos parados
 */
-void next(sensorsADT sensors);
-
-/*
-Retorna el ultimo anio en el que se hayan realizado mediciones
-*/
-int getMaxYear(sensorsADT sensors);
-
-/*
-Retorna la cantidad de peatones que se registraron durante dias de semana en un mismo anio. (i >= 0).
-*/
-unsigned long int getWeekDaysCount(sensorsADT sensors, int i, int year);
-
-/*
-Retorna la cantidad de peatones que se registraron durante dias de fin de semana en un mismo anio. (i >= 0).
-*/
-unsigned long int getWeekendsDaysCount(sensorsADT sensors, int i, int year);
-
-/*
-Retorna la cantidad de peatones que se registraron en un anio completo. (i >= 0).
-*/
-unsigned long int getTotalDaysCount(sensorsADT sensors, int i, int year);
+void next(sensorsdataADT sensors);
 
 // Query 3
-
 /*
 Retorna la cantidad total de peatones que se registraron en un anio completo dividido la cantidad de dias del anio. (i >= 0).
 */
-unsigned long double getTotalDaysProm(sensorsADT sensors, int i, int year);
+long double getYearAvg(yList list); //double no puede ser unsigned lmao
 
 #endif //TPFINAL_PI_SENSORSDATACDT_H
