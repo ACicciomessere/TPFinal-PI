@@ -83,12 +83,12 @@ TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, i
       }
       if(year == first->year) {
             if(date[0] != 'S') {
-                  aux->countWeek += hourlyCounts;
+                  first->countWeek += hourlyCounts;
             } else {
-                  aux->countEnd += hourlyCounts;
+                  first->countEnd += hourlyCounts;
             }
             vec[id - 1].count += hourlyCounts;
-            return year;
+            return first;
       }
       first->tail = addYearRec(first->tail, year, date, hourlyCounts, id, vec, flag);
       return first;
@@ -137,7 +137,7 @@ static int cmpPeopleAmount(const sensor * a,const sensor * b) {
 }
 
 void orderByPeopleAmount(sensorsdataADT sensors) {
-      qsort(sensors->vec, sensors->size, sizeof(sensor), &cmpPeopleAmount);
+      qsort(sensors->vec, sensors->size, sizeof(sensor), (*cmpPeopleAmount)(const sensor * a,const sensor * b));
 }
 
 unsigned int getSensorSize(sensorsdataADT sensors) {
@@ -211,7 +211,7 @@ static void freeRec(yearList * years) {
 void freeAll(sensorsdataADT sensors) {
       freeRec(sensors->first);
       for(int i=0;i<sensors->size;i++){
-      free(vec[i].name);
+        free(sensors->vec[i].name);
       }
       free(sensors->vec);
       free(sensors);
