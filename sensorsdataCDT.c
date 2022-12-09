@@ -25,7 +25,7 @@ sensorsdataADT newsensorsdataADT(){
 }
 
 int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) {
-      if(sensor->size <= id) {
+      if(sensor->size < id) {
             sensor->vec = realloc(sensor->vec, sizeof(sensor->vec[0]) * id);
             for(int i = sensor->size; i < id; i++) {
                   sensor->vec[i].name = NULL;
