@@ -66,7 +66,7 @@ int addSensor(sensorsdataADT sensor, char * string) {
 
 TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, int id, sensor * vec, int * flag) {
       if(first == NULL || year > first->year) {
-            TYearList * aux = malloc(sizeof(years));
+            TYearList * aux = malloc(sizeof(struct yearList));
             if(aux == NULL) {
                 *flag = 1;
             }
