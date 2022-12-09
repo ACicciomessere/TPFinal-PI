@@ -12,8 +12,23 @@ int main( int argCant, char * args[] ) {
             exit(2);
       }
       sensorsdataADT sensors = newSensorsADT();
-
+      if( sensors == NULL ){       //chequear si hay memoria pero lo tenemos que agregar en el .c en el newSensorsADT
+            ...
+      }
       int sensorSize = getSensorSize(sensors);
+      
+      char * currLine[ MAX_LEN ];
+      fgets( currLine, MAX_LEN, sensors );
+      while( fgets( currLine, MAX_LEN, sensors ) ){
+            if( ... )    //de nuevo una fun para saber que nos quedamos sin memoria
+      }
+      fclose( sensors );
+      
+      fgets( currLine, MAX_LEN, mediciones );
+      while( fgets( currLine, MAX_LEN, mediciones ) ){
+            if( ... )    //de nuevo una fun para saber que nos quedamos sin memoria
+      }
+      fclose( mediciones );
       
       //Query 1
       orderByPeopleAmount(sensors);
