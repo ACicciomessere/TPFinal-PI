@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "CTable.h"
 #define MAX_LEN 128
 typedef struct sensorsdataCDT* sensorsdataADT;
 typedef struct years*yList;
