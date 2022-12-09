@@ -53,7 +53,25 @@ size_t getPedestriansBySensor(sensorsdataADT sensor, int i) { // i >= 0
       }
       return 0;
 }
-//Iteradores
+
+int getYear(sensorsdataADT sensors) {
+      return sensors->idx->year;
+}
+
+unsigned long int getWeekCount(sensorsdataADT sensors) {
+      return sensors->idx->countWeek;
+}
+
+
+unsigned long int getCountEnd(sensorsdataADT sensors) {
+      return sensors->idx->countEnd;
+}
+
+unsigned long int getTotalCount(sensorsdataADT sensors) {
+      return sensors->idx->countEnd + sensors->idx->countWeek;
+}
+
+//Iterador
 void toBegin(sensorsdataADT sensors) {
       for(int i = 0; i < sensors->size; i++) {
             sensors->idx = sensors->first;
