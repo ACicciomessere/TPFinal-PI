@@ -10,8 +10,8 @@ int main( int argCant, char * args[] ) {
         exit(1);
     }
     
-    FILE * sensores = fopen( args[1], "r" );
-    FILE * mediciones = fopen( args[2], "r" );
+    FILE * mediciones = fopen( args[1], "r" );
+    FILE * sensores = fopen( args[2], "r" );
     
     if( sensores == NULL || mediciones == NULL ){
         fprintf( stderr,"ERROR en encontrar los datos\n" );
