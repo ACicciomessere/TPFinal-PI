@@ -1,6 +1,4 @@
 #include "sensorsdataCDT.c"
-#define MAX_DIG 11
-#define MAX_LEN 255
 
 static void memError(void);
 
