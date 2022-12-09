@@ -10,6 +10,8 @@
 typedef struct sensorsdataCDT* sensorsdataADT;
 typedef struct years*yList;
 
+void itoaAux(int n, char s[]);
+
 sensorsdataADT newSensorsDataADT(void);
 
 // Query 1
