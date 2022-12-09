@@ -37,7 +37,7 @@ static char* reverse(char *buffer, int i, int j){
     return buffer;
 }
 
-static void itoaAux(int n, char s[]){
+void itoaAux(int n, char s[]){
     int i, sign;
     if(( sign = n ) < 0 )
         n = -n;
