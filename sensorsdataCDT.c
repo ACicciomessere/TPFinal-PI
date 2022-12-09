@@ -17,7 +17,6 @@ typedef struct sensor {
 typedef struct sensorsdataCDT {
     sensor * vec;
     unsigned int size; // Cantidad de memoria reservada en el heap para el vector y cantidad total de sensores
-    unsigned int dim; // Cantidad de sensores activos
     yearList *first; //Ahora la lista de anios se accede desde aca
     yearList *idx; //iterador
 } sensorsdataCDT;
@@ -66,7 +65,7 @@ int addSensor(sensorsdataADT sensor, char * string) {
 
 TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, int id, sensor * vec, int * flag) {
       if(first == NULL || year > first->year) {
-            TYearList * aux = malloc(sizeof(struct yearList));
+            yearList * aux = malloc(sizeof(yearList));
             if(aux == NULL) {
                 *flag = 1;
             }
@@ -91,7 +90,7 @@ TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, i
             vec[id - 1].count += hourlyCounts;
             return year;
       }
-      first->tail = addYearRec(first->tail, year, name, hourlyCounts, id, vec);
+      first->tail = addYearRec(first->tail, year, date, hourlyCounts, id, vec, flag);
       return first;
 }
 
@@ -123,7 +122,7 @@ int addMeasurements( sensorsdataADT sensor, char * string ){
     token = strtok(NULL, fin);
     unsigned long int Counts = atoi(token);
     
-    return newYear( sensor, year, date, counts, id );
+    return newYear( sensor, year, date, Counts, id );
 }
 
 static int cmpPeopleAmount(const sensor * a,const sensor * b) {
@@ -138,7 +137,7 @@ static int cmpPeopleAmount(const sensor * a,const sensor * b) {
 }
 
 void orderByPeopleAmount(sensorsdataADT sensors) {
-      qsort(sensors->vec, sensors->size, sizeof(sensor), cmpPeopleAmount);
+      qsort(sensors->vec, sensors->size, sizeof(sensor), &cmpPeopleAmount);
 }
 
 unsigned int getSensorSize(sensorsdataADT sensors) {
@@ -206,12 +205,14 @@ static void freeRec(yearList * years) {
             return;
       }
       freeRec(years->tail);
-      free(years->name);
       free(years);
 }
 
 void freeAll(sensorsdataADT sensors) {
       freeRec(sensors->first);
+      for(int i=0;i<sensors->size;i++){
+      free(vec[i].name);
+      }
       free(sensors->vec);
       free(sensors);
 }
