@@ -7,6 +7,8 @@ typedef struct years {
     struct years * tail;
 } yearList;
 
+typedef yearList * TYearList;
+
 typedef struct sensor {
    char * name; // En caso de que el sensor no exista, o este removido, entonces name estara en NULL
    unsigned long int count; // Cantidad total de peatones registrados por el sensor
@@ -29,6 +31,7 @@ int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) 
             sensor->vec = realloc(sensor->vec, sizeof(sensor->vec[0]) * id);
             for(int i = sensor->size; i < id; i++) {
                   sensor->vec[i].name = NULL;
+                  sensor->vec[i].count = 0;
             }
             sensor->size = id;
       }
@@ -61,11 +64,44 @@ int addSensor(sensorsdataADT sensor, char * string) {
       return 0;
 }
 
-int newYear(sensorsdataADT sensor, int year, unsigned long int countWeek, unsigned long int countEnd ){
-    
+TYearList addYearRec(yearList * first, int year, char * name, int hourlyCounts, int id, sensor * vec, int * flag) {
+      if(first == NULL || year > first->year) {
+            TYearList * aux = malloc(sizeof(years));
+            if(aux == NULL) {
+                *flag = 1;
+            }
+            aux->year = year;
+            if(name[0] != 'S') {
+                  aux->countWeek = hourlyCounts;
+                  aux->countEnd = 0;
+            } else {
+                  aux->countEnd = hourlyCounts;
+                  aux->countWeek = 0;
+            }
+            vec[id - 1].count += hourlyCounts;
+            aux->tail = first;
+            return aux;
+      }
+      if(year == first->year) {
+            if(name[0] != 'S') {
+                  aux->countWeek += hourlyCounts;
+            } else {
+                  aux->countEnd += hourlyCounts;
+            }
+            vec[id - 1].count += hourlyCounts;
+            return year;
+      }
+      first->tail = addYearRec(first->tail, year, name, hourlyCounts, id, vec);
+      return first;
 }
 
-int addMeasurements( sensorsdataADT sensor, char * string ){
+int newYear(sensorsdataADT sensor, int year, char * name, int hourlyCounts, int id) {
+    int flag = 0;
+    sensor->first = addYearRec(sensor->first, year, name, hourlyCounts, id, sensor->vec, &flag);
+    return flag;
+}
+
+int addMeasurements( sensorsdataADT sensor, char * string ) {
     
 }
 
