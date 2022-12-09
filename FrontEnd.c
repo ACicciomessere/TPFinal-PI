@@ -94,7 +94,7 @@ int main( int argCant, char * args[] ) {
     htmlTable htmlQ3 = newTable("query3", 2, "Year", "Pedestrians_Avg");
     while(hasNext(sensors)){
         year = getYear(sensors);
-        yearAvg = getYearAvg(sensors->idx);
+        yearAvg = getYearAvg(sensors);
         fprintf( query3, "%i;%.2lf\n", year, yearAvg);   //sensors->idx->year;getYearAvg(sensors->idx)
         itoaAux(year, sAux);
         itoaAux(yearAvg, sAux2);
