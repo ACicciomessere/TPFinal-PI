@@ -5,18 +5,22 @@ int main( int argCant, char * args[] ) {
         fprintf( stderr, 'ERROR en cantidad de datos introducidos' );
         exit(1);
     }
+    
     FILE * sensores = fopen( args[1], "r" );
     FILE * mediciones = fopen( args[2], "r" );
+    
     if( sensores == NULL || mediciones == NULL ){
         fprintf( stderr,'ERROR en encontrar los datos' );
         exit(2);
     }
+    
     sensorsdataADT sensors = newSensorsDataADT();
     if( sensors == NULL ){
         //chequear si hay memoria pero lo tenemos que agregar en el .c en el newSensorsADT
     }
 
     char * currLine[ MAX_LEN ];
+    
     fgets( currLine, MAX_LEN, sensors );
     while( fgets( currLine, MAX_LEN, sensors ) ){
         if( ... )    //de nuevo una fun para saber que nos quedamos sin memoria
@@ -29,10 +33,9 @@ int main( int argCant, char * args[] ) {
     }
     fclose( mediciones );
     
-    unsigned int sensorSize = getSensorSize(sensors);
-    
     //Query 1
     orderByPeopleAmount(sensors);
+    unsigned int sensorSize = getSensorSize(sensors);
     for(int i = 0; i < sensorSize; i++) {
         char * name = getSensorName(sensors, i);
         if(name != NULL) {
