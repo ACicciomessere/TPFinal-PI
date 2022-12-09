@@ -61,6 +61,14 @@ int addSensor(sensorsdataADT sensor, char * string) {
       return 0;
 }
 
+int newYear(sensorsdataADT sensor, int year, unsigned long int countWeek, unsigned long int countEnd ){
+    
+}
+
+int addMeasurements( sensorsdataADT sensor, char * string ){
+    
+}
+
 static int cmpPeopleAmount(const sensor * a,const sensor * b) {
       int c; 
       if((c = a->count - b->count) == 0) { // Entonces definimos por nombre del sensor
