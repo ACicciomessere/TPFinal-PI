@@ -51,10 +51,10 @@ int main( int argCant, char * args[] ) {
     fputs("Year;Weekdays_Count;Weekends_Count;Total_Count\n", query2);
     fputs("Year;Pedestrians_Avg\n", query3);
     
-    char * sTotalPed[MAX_DIG];
-    char * sTotalPed2[MAX_DIG];
-    char * sTotalPed3[MAX_DIG];
-    char * sTotalPed4[MAX_DIG];
+    char sTotalPed[MAX_DIG];
+    char sTotalPed2[MAX_DIG];
+    char sTotalPed3[MAX_DIG];
+    char sTotalPed4[MAX_DIG];
     
     //Query 1
     orderByPeopleAmount(sensors);
