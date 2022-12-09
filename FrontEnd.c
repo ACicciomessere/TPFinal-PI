@@ -1,4 +1,4 @@
-#include "sensorsdataCDT.c"
+#include "sensorsdataCDT.h"
 
 static void memError(void);
 
