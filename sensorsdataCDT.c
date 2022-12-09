@@ -37,7 +37,7 @@ static char* reverse(char *buffer, int i, int j){
     return buffer;
 }
 
-static void itoa(int n, char s[]){
+static void itoaAux(int n, char s[]){
     int i, sign;
     if(( sign = n ) < 0 )
         n = -n;
@@ -48,7 +48,7 @@ static void itoa(int n, char s[]){
     if(sign < 0)
         s[i++] = '-';
     s[i] = '\0';
-    reverse(s);
+    reverse(s, 0, i-1);
 }
 
 int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) {
