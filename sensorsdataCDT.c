@@ -24,6 +24,43 @@ sensorsdataADT newsensorsdataADT(){
     return calloc( 1, sizeof( sensorsdataCDT ) );
 }
 
+int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) {
+      if(sensor->size < id) {
+            sensor->vec = realloc(sensor->vec, sizeof(sensor->vec[0]) * id);
+            for(int i = sensor->size; i < id; i++) {
+                  sensor->vec[i].name = NULL;
+            }
+            sensor->size = id;
+      }
+      sensor->vec[id - 1].name = malloc(strlen(name) + 1);
+      strcpy(sensor->vec[id - 1].name, name);
+      if(sensor->vec[id - 1].name == NULL) {
+            return 1;
+      }
+      return 0;
+}
+
+int addSensor(sensorsdataADT sensor, char * string) {
+      char * token;
+      char fin[2] = ";";
+
+      token = strtok(string, fin);
+
+      int id = atoi(token);
+
+      token = strtok(NULL, fin);
+      char * name = token;
+
+      token = strtok(NULL, fin);
+      char status = token[0];
+
+      if(status == 'A') {
+            return newSensor(sensor, id, name, status);
+      }
+
+      return 0;
+}
+
 static int cmpPeopleAmount(const sensor * a,const sensor * b) {
       int c; 
       if((c = a->count - b->count) == 0) { // Entonces definimos por nombre del sensor
