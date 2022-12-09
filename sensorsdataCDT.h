@@ -76,4 +76,9 @@ Retorna la cantidad total de peatones que se registraron en un anio completo div
 */
 long double getYearAvg(yList list); //double no puede ser unsigned lmao
 
+/*
+Libera toda la memoria reservada en el heap
+*/
+void freeAll(sensorsdataADT sensors);
+
 #endif //TPFINAL_PI_SENSORSDATACDT_H
