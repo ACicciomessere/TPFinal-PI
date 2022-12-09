@@ -25,6 +25,32 @@ sensorsdataADT newsensorsdataADT(){
     return calloc( 1, sizeof( sensorsdataCDT ) );
 }
 
+static void swap(char *x, char *y) {
+    char t = *x; *x = *y; *y = t;
+}
+
+static char* reverse(char *buffer, int i, int j){
+    while (i < j) {
+        swap(&buffer[i++], &buffer[j--]);
+    }
+ 
+    return buffer;
+}
+
+static void itoa(int n, char s[]){
+    int i, sign;
+    if(( sign = n ) < 0 )
+        n = -n;
+    i = 0;
+    do{
+        s[i++] = n%10 + '0';
+    }while((n /=  10) > 0);
+    if(sign < 0)
+        s[i++] = '-';
+    s[i] = '\0';
+    reverse(s);
+}
+
 int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) {
     if(status=='A') {
         if (sensor->size < id) {
