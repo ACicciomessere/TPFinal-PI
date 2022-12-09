@@ -137,7 +137,7 @@ static int cmpPeopleAmount(const sensor * a,const sensor * b) {
 }
 
 void orderByPeopleAmount(sensorsdataADT sensors) {
-      qsort(sensors->vec, sensors->size, sizeof(sensor), (*cmpPeopleAmount)(const sensor * a,const sensor * b));
+      qsort(sensors->vec, sensors->size, sizeof(sensor),(int (*) (const void*,const void*))cmpPeopleAmount);
 }
 
 unsigned int getSensorSize(sensorsdataADT sensors) {
