@@ -61,5 +61,8 @@ int main( int argCant, char * args[] ) {
         fprintf(...);//Printeado a Query2.csv y Q2.html: sensors->idx->year;getYearAvg(sensors->idx)
         next(sensors);
     }
+    
+    freeAll(sensors);
+    
         return 0;
 }
