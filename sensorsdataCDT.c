@@ -99,11 +99,12 @@ long double getYearAvg(yList list) {//TODO: Creo que lo podriamos hacer long flo
       return (long double) (list->countWeek+list->countEnd)/DAYS_IN_YEAR+isLeap(list->year);
 }
 
-static void freeRec(yearList years) {
+static void freeRec(yearList * years) {
       if(years == NULL) {
             return;
       }
       freeRec(years->tail);
+      free(years->name);
       free(years);
 }
 
