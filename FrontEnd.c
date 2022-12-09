@@ -3,6 +3,8 @@
 #define MAX_DIG 11
 #define MAX_LEN 255
 
+static void memError(void);
+
 int main( int argCant, char * args[] ) {
     if( argCant != 3 && argCant != 7 ){//!=3||!=7 es una tautologia. Quiciste decir &&?
         fprintf( stderr, "ERROR en cantidad de datos introducidos\n" );
@@ -19,19 +21,21 @@ int main( int argCant, char * args[] ) {
     
     sensorsdataADT sensors = newSensorsDataADT();
     if( sensors == NULL ){
-        //chequear si hay memoria pero lo tenemos que agregar en el .c en el newSensorsADT
+        memError();
     }
 
     char * currLine[ MAX_LEN ];    
     fgets( currLine, MAX_LEN, sensores );
     while( fgets( currLine, MAX_LEN, sensores ) ){
-        if( ... )    //de nuevo una fun para saber que nos quedamos sin memoria
+        if( ... )
+            memError();
     }
     fclose( sensores );
 
     fgets( currLine, MAX_LEN, mediciones );
     while( fgets( currLine, MAX_LEN, mediciones ) ){
-        if( ... )    //de nuevo una fun para saber que nos quedamos sin memoria
+        if( ... )
+            memError();
     }
     fclose( mediciones );
     
@@ -117,4 +121,9 @@ int main( int argCant, char * args[] ) {
     fclose(query3);
     
     return 0;
+}
+
+static void memError(void){
+    fprintf(stderr,"ERROR: Falta de memoria");
+    exit(4);
 }
