@@ -15,7 +15,6 @@ int main( int argCant, char * args[] ) {
     if( sensors == NULL ){
         //chequear si hay memoria pero lo tenemos que agregar en el .c en el newSensorsADT
     }
-    int sensorSize = getSensorSize(sensors);
 
     char * currLine[ MAX_LEN ];
     fgets( currLine, MAX_LEN, sensors );
@@ -29,10 +28,12 @@ int main( int argCant, char * args[] ) {
         if( ... )    //de nuevo una fun para saber que nos quedamos sin memoria
     }
     fclose( mediciones );
-
+    
+    unsigned int sensorSize = getSensorSize(sensors);
+    
     //Query 1
     orderByPeopleAmount(sensors);
-    for(int i = 0; i < sensors->size; i++) {
+    for(int i = 0; i < sensorSize; i++) {
         char * name = getSensorName(sensors, i);
         if(name != NULL) {
             fprintf(...);//TODO: name;sensors->vec[i].count
@@ -41,24 +42,24 @@ int main( int argCant, char * args[] ) {
 
     //Query 2
     toBegin(sensors);
-    while(sensors->idx!=NULL){ //TODO: Esto solo funciona si la toma de datos te arma la yearList en forma DESCENDIENTE
+    while(hasNext(sensors)){ //TODO: Esto solo funciona si la toma de datos te arma la yearList en forma DESCENDIENTE
         fprintf(...);//sensors->idx->year;sensors->idx->countWeek;sensors->idx->countEnd;sensors->idx->countEnd+sensors->idx->countWeek
-        sensors->idx=sensors->idx->tail;
+        next(sensors);
     }
 
     //Query 3
     toBegin(sensors);
-    while(sensors->idx!=NULL){
+    while(hasNext(sensors)){
         fprintf(...);//sensors->idx->year;getYearAvg(sensors->idx)
-        sensors->idx=sensors->idx->tail;
+        next(sensors);
     }
 
     //Alternativamente, Query 2 y 3 al mismo tiempo
     toBegin(sensors);
-    while(sensors->idx!=NULL) {
+    while(hasNext(sensors)) {
         fprintf(...);//Printeado a Query2.csv y Q2.html: sensors->idx->year;sensors->idx->countWeek;sensors->idx->countEnd;sensors->idx->countEnd+sensors->idx->countWeek
         fprintf(...);//Printeado a Query2.csv y Q2.html: sensors->idx->year;getYearAvg(sensors->idx)
-        sensors->idx = sensors->idx->tail;
+        next(sensors);
     }
         return 0;
 }
