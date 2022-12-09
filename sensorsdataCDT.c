@@ -98,3 +98,17 @@ int isLeap(int year){//Checkea si un anio es bisiesto
 long double getYearAvg(yList list) {//TODO: Creo que lo podriamos hacer long float, porque la precision del double es para muchos decimales, si mal no entendi intro info
       return (long double) (list->countWeek+list->countEnd)/DAYS_IN_YEAR+isLeap(list->year);
 }
+
+static void freeRec(yearList years) {
+      if(years == NULL) {
+            return;
+      }
+      freeRec(years->tail);
+      free(years);
+}
+
+void freeAll(sensorsdataADT sensors) {
+      freeRec(sensors->first);
+      free(sensors->vec);
+      free(sensors);
+}
