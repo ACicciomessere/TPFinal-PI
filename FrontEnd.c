@@ -1,5 +1,4 @@
 #include "sensorsdataCDT.c"
-#include "htmlTable.c"
 #define MAX_DIG 11
 #define MAX_LEN 255
 
@@ -27,14 +26,14 @@ int main( int argCant, char * args[] ) {
     char * currLine[ MAX_LEN ];    
     fgets( currLine, MAX_LEN, sensores );
     while( fgets( currLine, MAX_LEN, sensores ) ){
-        if( ... )
+        if( addSensor(sensors, currLine) )
             memError();
     }
     fclose( sensores );
 
     fgets( currLine, MAX_LEN, mediciones );
     while( fgets( currLine, MAX_LEN, mediciones ) ){
-        if( ... )
+        if( addMeasurements(mediciones, currLine) )
             memError();
     }
     fclose( mediciones );
