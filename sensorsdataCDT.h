@@ -20,7 +20,7 @@ void orderByPeopleAmount(sensorsdataADT sensors);
 Retorna la cantidad total de peatones registrados por un sensor. (i >= 0).
 En el caso de que un sensor no este activo, entonces retorna 0.
 */
-size_t getPedestriansBySensor(sensorsdataADT sensor, int i);
+unsigned long int getPedestriansBySensor(sensorsdataADT sensor, int i);
 
 /*
 Retorna la cantidad posiciones reservadas en el heap para el vector.
