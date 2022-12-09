@@ -64,14 +64,14 @@ int addSensor(sensorsdataADT sensor, char * string) {
       return 0;
 }
 
-TYearList addYearRec(yearList * first, int year, char * name, int hourlyCounts, int id, sensor * vec, int * flag) {
+TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, int id, sensor * vec, int * flag) {
       if(first == NULL || year > first->year) {
             TYearList * aux = malloc(sizeof(years));
             if(aux == NULL) {
                 *flag = 1;
             }
             aux->year = year;
-            if(name[0] != 'S') {
+            if(date[0] != 'S') {
                   aux->countWeek = hourlyCounts;
                   aux->countEnd = 0;
             } else {
@@ -83,7 +83,7 @@ TYearList addYearRec(yearList * first, int year, char * name, int hourlyCounts, 
             return aux;
       }
       if(year == first->year) {
-            if(name[0] != 'S') {
+            if(date[0] != 'S') {
                   aux->countWeek += hourlyCounts;
             } else {
                   aux->countEnd += hourlyCounts;
@@ -95,14 +95,35 @@ TYearList addYearRec(yearList * first, int year, char * name, int hourlyCounts, 
       return first;
 }
 
-int newYear(sensorsdataADT sensor, int year, char * name, int hourlyCounts, int id) {
+int newYear(sensorsdataADT sensor, int year, char * date, int hourlyCounts, int id) {
     int flag = 0;
-    sensor->first = addYearRec(sensor->first, year, name, hourlyCounts, id, sensor->vec, &flag);
+    sensor->first = addYearRec(sensor->first, year, date, hourlyCounts, id, sensor->vec, &flag);
     return flag;
 }
 
-int addMeasurements( sensorsdataADT sensor, char * string ) {
+int addMeasurements( sensorsdataADT sensor, char * string ){
+    char * token;
+    char fin[2] = ";";
     
+    token = strtok(string, fin);
+    int year = atoi(token);
+    
+    token = strtok(NULL, fin);       //salteo el mes
+    
+    token = strtok(NULL, fin);       //salteo el dia del mes
+    
+    token = strtok(NULL, fin);
+    char * date = token;
+    
+    token = strtok(NULL, fin);
+    int id = atoi(token);
+    
+    token = strtok(NULL, fin);       //salteo time
+    
+    token = strtok(NULL, fin);
+    unsigned long int Counts = atoi(token);
+    
+    return newYear( sensor, year, date, counts, id );
 }
 
 static int cmpPeopleAmount(const sensor * a,const sensor * b) {
