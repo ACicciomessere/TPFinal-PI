@@ -14,6 +14,10 @@ void itoaAux(int n, char s[]);
 
 sensorsdataADT newSensorsDataADT(void);
 
+int addSensor(sensorsdataADT sensor, char * string);
+
+int addMeasurements( sensorsdataADT sensor, char * string );
+
 // Query 1
 
 /*
