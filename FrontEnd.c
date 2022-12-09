@@ -21,7 +21,7 @@ int main( int argCant, char * args[] ) {
         memError();
     }
 
-    char * currLine[ MAX_LEN ];    
+    char currLine[ MAX_LEN ];    
     fgets( currLine, MAX_LEN, sensores );
     while( fgets( currLine, MAX_LEN, sensores ) ){
         if( addSensor(sensors, currLine) )
@@ -31,7 +31,7 @@ int main( int argCant, char * args[] ) {
 
     fgets( currLine, MAX_LEN, mediciones );
     while( fgets( currLine, MAX_LEN, mediciones ) ){
-        if( addMeasurements(mediciones, currLine) )
+        if( addMeasurements(sensors, currLine) )
             memError();
     }
     fclose( mediciones );
@@ -56,7 +56,6 @@ int main( int argCant, char * args[] ) {
     
     //Query 1
     orderByPeopleAmount(sensors);
-    unsigned int sensorSize = getSensorSize(sensors);
     htmlTable htmlQ1 = newTable("query1", 2, "Sensor", "Pedestrians");
     for(int i = 0; i < sensorSize; i++) {
         char * name = getSensorName(sensors, i);
@@ -96,7 +95,7 @@ int main( int argCant, char * args[] ) {
     while(hasNext(sensors)){
         year = getYear(sensors);
         yearAvg = getYearAvg(sensors->idx);
-        fprintf( query3, "%i;%lf\n", year, yearAvg) );   //sensors->idx->year;getYearAvg(sensors->idx)
+        fprintf( query3, "%i;%lf\n", year, yearAvg);   //sensors->idx->year;getYearAvg(sensors->idx)
         itoa(year, sAux, 10);
         itoa(yearAvg, sAux2, 10);
         addHTMLRow(htmlQ3, sAux, sAux2 );
