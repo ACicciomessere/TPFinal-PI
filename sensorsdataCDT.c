@@ -8,7 +8,7 @@ typedef struct years {
 } yearList;
 
 typedef struct sensor {
-   char * name; // En caso de que el sensor no exista, o este removido, name estara en NULL
+   char * name;
    unsigned long int count; // Cantidad total de peatones registrados por el sensor
 } sensor;
 
