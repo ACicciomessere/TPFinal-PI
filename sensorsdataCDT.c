@@ -2,8 +2,8 @@
 
 typedef struct years {
     int year;
-    unsigned int countWeek;
-    unsigned int countEnd;
+    unsigned long int countWeek;
+    unsigned long int countEnd;
     struct years * tail;
 } yearList;
 
