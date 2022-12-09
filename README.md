@@ -1,4 +1,4 @@
-Para poder generar el ejecutable, se debe acceder desde la terminal y ejecutar el comando "make all" en el directorio aclutal.
+Para poder generar el ejecutable, se debe acceder desde la terminal y ejecutar el comando "make all" en el directorio actual.
 
 Para poder debuggear se debe correr el comando "make debug".
 
