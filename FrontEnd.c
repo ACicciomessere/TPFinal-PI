@@ -62,7 +62,7 @@ int main( int argCant, char * args[] ) {
         if(name != NULL) {
             unsigned long int totalPedestrians = getPedestriansBySensor(sensors, i);
             fprintf( query1, "%s;%lu\n", name, totalPedestrians );   //TODO: name;sensors->vec[i].count
-            itoa(totalPedestrians, sAux, 10);
+            itoaAux(totalPedestrians, sAux);
             addHTMLRow(htmlQ1, name, sAux );
         }
     }
@@ -79,10 +79,10 @@ int main( int argCant, char * args[] ) {
         endCount = getCountEnd(sensors);
         totalCount = getTotalCount(sensors);
         fprintf( query2, "%i;%lu;%lu;%lu\n", year , weekCount , endCount, totalCount );  //sensors->idx->year;sensors->idx->countWeek;sensors->idx->countEnd;sensors->idx->countEnd+sensors->idx->countWeek
-        itoa(year, sAux, 10);
-        itoa(weekCount, sAux2, 10);
-        itoa(endCount, sAux3, 10);
-        itoa(totalCount, sAux4, 10);
+        itoaAux(year, sAux);
+        itoaAux(weekCount, sAux2);
+        itoaAux(endCount, sAux3);
+        itoaAux(totalCount, sAux4);
         addHTMLRow(htmlQ2, sAux, sAux2, sAux3, sAux4 );
         next(sensors);
     }
@@ -96,8 +96,8 @@ int main( int argCant, char * args[] ) {
         year = getYear(sensors);
         yearAvg = getYearAvg(sensors->idx);
         fprintf( query3, "%i;%.2lf\n", year, yearAvg);   //sensors->idx->year;getYearAvg(sensors->idx)
-        itoa(year, sAux, 10);
-        itoa(yearAvg, sAux2, 10);
+        itoaAux(year, sAux);
+        itoaAux(yearAvg, sAux2);
         addHTMLRow(htmlQ3, sAux, sAux2 );
         next(sensors);
     }
