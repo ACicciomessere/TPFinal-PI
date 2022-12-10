@@ -16,8 +16,8 @@ typedef struct sensor {
 
 typedef struct sensorsdataCDT {
     sensor * vec;
-    unsigned int size; // Cantidad de memoria reservada en el heap para el vector y cantidad total de sensores
-    yearList *first; //Ahora la lista de anios se accede desde aca
+    unsigned int size; // Cantidad de memoria reservada en el heap para el vector de sensores
+    yearList *first; //Lista recursiva donde se almacenan cuantos peatones se registraron en un anio, en un momento particular de la semana. Ordenada en forma desc.
     yearList *idx; //iterador
 } sensorsdataCDT;
 
@@ -25,35 +25,10 @@ sensorsdataADT newSensorsDataADT(){   // Funcion para crear el espacio que va a 
     return calloc( 1, sizeof( sensorsdataCDT ) );
 }
 
-static void swap(char *x, char *y) {  // Funcion para cambiar la posicion de dos elementos de un string
-    char t = *x; *x = *y; *y = t;  // Utilizada unicamente para la funcion reverse
-}
-
-static char* reverse(char *buffer, int i, int j){  // Funcion que invierte un string
-    while (i < j) {                                // Utilizada unicamente en la funcion itoaAux
-        swap(&buffer[i++], &buffer[j--]);
-    }
-    return buffer;
-}
-
-void itoaAux(int n, char s[]){   // Funcion para converitr un valor de tipo int a un string
-    int i, sign;
-    if(( sign = n ) < 0 )        // Guardo el signo del numero
-        n = -n;
-    i = 0;
-    do{
-        s[i++] = n%10 + '0';     // Ciclo que va guardando cada numero en el vector de chars hasta que llegue a 0
-    }while((n /=  10) > 0);      
-    if(sign < 0)                  
-        s[i++] = '-';            // Luego si el valor es negativo le agrega el signo
-    s[i] = '\0';
-    reverse(s, 0, i-1);          // Finalmente lo invierte para que quede el numero como corresponde
-}
-
 int newSensor(sensorsdataADT sensor, unsigned int id, char * name) {   // Agrega a la estructura los datos de un nuevo sensor
     if (sensor->size < id) {                                                        // aumentando el espacio conforme se va necesitando
         sensor->vec = realloc(sensor->vec, sizeof(sensor->vec[0]) * id);        
-        for (int i = sensor->size; i < id; i++) {
+        for (int i = sensor->size; i < id; i++) {                       //Setea los nombres de los sensores intermedios a NULL, para saber que si un sensor es NULL, esta Retirado
             sensor->vec[i].name = NULL;
             sensor->vec[i].count = 0;
         }
@@ -61,7 +36,7 @@ int newSensor(sensorsdataADT sensor, unsigned int id, char * name) {   // Agrega
     }
     sensor->vec[id - 1].name = malloc(strlen(name) + 1);
     strcpy(sensor->vec[id - 1].name, name);
-    if (sensor->vec[id - 1].name == NULL) {                                     // Verifica si nos quedamos sin memoria una vez agregamos un nuevo sensor
+    if (sensor->vec[id - 1].name == NULL) {                              // Verifica si nos quedamos sin memoria una vez agregamos un nuevo sensor
             return 1;
     }
     return 0;
@@ -92,7 +67,7 @@ TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, i
     if(first == NULL || year > first->year) {                                                                       // de las mediciones
         yearList * aux = malloc(sizeof(yearList));
         if(aux == NULL) {
-            *flag = 1;
+            *flag = 1;              //Se asegura que se creo un nuevo nodo en la lista de anios
         }
         aux->year = year;
         if(date[0] != 'S') {        //Si el string inicia con "S" entonces es porque es alguno de los dos dias del fin de semana ("Saturday" o "Sunday")
@@ -120,7 +95,7 @@ TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, i
 }
 
 int newYear(sensorsdataADT sensor, int year, char * date, int hourlyCounts, int id) {   // Agrega los datos de las mediciones a la estructura
-    int flag = 0;
+    int flag = 0;                                                                       //Flag para verificar la alocacion de memoria correcta de un nuevo nodo
     if(id<=sensor->size&&sensor->vec[id-1].name!=NULL)
         sensor->first = addYearRec(sensor->first, year, date, hourlyCounts, id, sensor->vec, &flag);
     return flag;
@@ -226,7 +201,7 @@ long double getYearAvg(sensorsdataADT sns) {    // Devuelve el promedio de perso
     return ((long double) sns->idx->countWeek+sns->idx->countEnd) / (DAYS_IN_YEAR+isLeap(sns->idx->year));
 }
 
-static void freeRec(yearList * years) {     // Libera la memoria utilizada en la lista de anios
+static void freeRec(yearList * years) {     // Libera la memoria utilizada en la lista de anios de forma recursiva
     if(years == NULL) {
         return;
     }
