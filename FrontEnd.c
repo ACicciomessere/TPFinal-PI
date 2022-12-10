@@ -103,14 +103,6 @@ int main( int argCant, char * args[] ) {
     }
     closeHTMLTable(htmlQ3);
 
-    // Alternativamente, Query 2 y 3 al mismo tiempo
-    // toBegin(sensors);
-    // while(hasNext(sensors)) {
-    //    fprintf(...);//Printeado a Query2.csv y Q2.html: sensors->idx->year;sensors->idx->countWeek;sensors->idx->countEnd;sensors->idx->countEnd+sensors->idx->countWeek
-    //    fprintf(...);//Printeado a Query2.csv y Q2.html: sensors->idx->year;getYearAvg(sensors->idx)
-    //    next(sensors);
-    // }
-
     freeAll(sensors);
     fclose(query1);
     fclose(query2);
