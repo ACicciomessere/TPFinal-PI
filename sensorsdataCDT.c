@@ -51,20 +51,18 @@ void itoaAux(int n, char s[]){   // Funcion para converitr un valor de tipo int 
 }
 
 int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) {   // Agrega a la estructura los datos de un nuevo sensor
-    if(status=='A') {                                                               // Si este esta activo
-        if (sensor->size < id) {                                                    // Aumentando el espacio conforme se va necesitando
-            sensor->vec = realloc(sensor->vec, sizeof(sensor->vec[0]) * id);        
-            for (int i = sensor->size; i < id; i++) {
-                sensor->vec[i].name = NULL;
-                sensor->vec[i].count = 0;
-            }
-            sensor->size = id;
+    if (sensor->size < id) {                                                        // aumentando el espacio conforme se va necesitando
+        sensor->vec = realloc(sensor->vec, sizeof(sensor->vec[0]) * id);        
+        for (int i = sensor->size; i < id; i++) {
+            sensor->vec[i].name = NULL;
+            sensor->vec[i].count = 0;
         }
-        sensor->vec[id - 1].name = malloc(strlen(name) + 1);
-        strcpy(sensor->vec[id - 1].name, name);
-        if (sensor->vec[id - 1].name == NULL) {                                     // Verifica si nos quedamos sin memoria una vez agregamos un nuevo sensor
+        sensor->size = id;
+    }
+    sensor->vec[id - 1].name = malloc(strlen(name) + 1);
+    strcpy(sensor->vec[id - 1].name, name);
+    if (sensor->vec[id - 1].name == NULL) {                                     // Verifica si nos quedamos sin memoria una vez agregamos un nuevo sensor
             return 1;
-        }
     }
     return 0;
 }
@@ -83,7 +81,7 @@ int addSensor(sensorsdataADT sensor, char * string) {       // Lee el string dad
     token = strtok(NULL, fin);
     char status = token[0];
 
-    if(status == 'A') {         // Esto creo que esta de mas porque se chequea en newSensor
+    if(status == 'A') {         // Chequea que no agregue un sensor que se encuentra removido
         return newSensor(sensor, id, name, status);         // Llama a newSensor para agregar el sensor
     }
 
