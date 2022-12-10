@@ -33,7 +33,6 @@ static char* reverse(char *buffer, int i, int j){
     while (i < j) {
         swap(&buffer[i++], &buffer[j--]);
     }
- 
     return buffer;
 }
 
@@ -49,26 +48,6 @@ void itoaAux(int n, char s[]){
         s[i++] = '-';
     s[i] = '\0';
     reverse(s, 0, i-1);
-}
-
-void itoaAux2( long double n, char s[]){
-    int i, sign;
-    if(( sign = n ) < 0 )
-        n = -n;
-    i = 0;
-    do{
-        s[i++] = n%( (long double) 10 ) + '0';
-    }while((n /=  10) > 0);
-    n *= 100;
-    if(sign < 0)
-        s[i++] = '-';
-    s[i] = '\0';
-    reverse(s, 0, i-1);
-    s[i++] = '.';
-    for( int j = 0; j < 2; j++ ){
-        s[i++] = n%( (long double) 10 ) + '0';
-    }
-    s[i] = '\0';
 }
 
 int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) {
@@ -144,7 +123,8 @@ TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, i
 
 int newYear(sensorsdataADT sensor, int year, char * date, int hourlyCounts, int id) {
     int flag = 0;
-    sensor->first = addYearRec(sensor->first, year, date, hourlyCounts, id, sensor->vec, &flag);
+    if(id<=sensor->size&&sensor->vec[id-1].name!=NULL)
+        sensor->first = addYearRec(sensor->first, year, date, hourlyCounts, id, sensor->vec, &flag);
     return flag;
 }
 
