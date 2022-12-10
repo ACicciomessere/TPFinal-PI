@@ -21,39 +21,39 @@ typedef struct sensorsdataCDT {
     yearList *idx; //iterador
 } sensorsdataCDT;
 
-sensorsdataADT newSensorsDataADT(){
+sensorsdataADT newSensorsDataADT(){   // Funcion para crear el espacio que va a ocupar inicialmente la estructura
     return calloc( 1, sizeof( sensorsdataCDT ) );
 }
 
-static void swap(char *x, char *y) {
-    char t = *x; *x = *y; *y = t;
+static void swap(char *x, char *y) {  // Funcion para cambiar la posicion de dos elementos de un string
+    char t = *x; *x = *y; *y = t;  // Utilizada unicamente para la funcion reverse
 }
 
-static char* reverse(char *buffer, int i, int j){
-    while (i < j) {
+static char* reverse(char *buffer, int i, int j){  // Funcion que invierte un string
+    while (i < j) {                                // Utilizada unicamente en la funcion itoaAux
         swap(&buffer[i++], &buffer[j--]);
     }
     return buffer;
 }
 
-void itoaAux(int n, char s[]){
+void itoaAux(int n, char s[]){   // Funcion para converitr un valor de tipo int a un string
     int i, sign;
-    if(( sign = n ) < 0 )
+    if(( sign = n ) < 0 )        // Guardo el signo del numero
         n = -n;
     i = 0;
     do{
-        s[i++] = n%10 + '0';
-    }while((n /=  10) > 0);
-    if(sign < 0)
-        s[i++] = '-';
+        s[i++] = n%10 + '0';     // Ciclo que va guardando cada numero en el vector de chars hasta que llegue a 0
+    }while((n /=  10) > 0);      
+    if(sign < 0)                  
+        s[i++] = '-';            // Luego si el valor es negativo le agrega el signo
     s[i] = '\0';
-    reverse(s, 0, i-1);
+    reverse(s, 0, i-1);          // Finalmente lo invierte para que quede el numero como corresponde
 }
 
-int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) {
-    if(status=='A') {
-        if (sensor->size < id) {
-            sensor->vec = realloc(sensor->vec, sizeof(sensor->vec[0]) * id);
+int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) {   // Agrega a la estructura los datos de un nuevo sensor
+    if(status=='A') {                                                               // Si este esta activo
+        if (sensor->size < id) {                                                    // Aumentando el espacio conforme se va necesitando
+            sensor->vec = realloc(sensor->vec, sizeof(sensor->vec[0]) * id);        
             for (int i = sensor->size; i < id; i++) {
                 sensor->vec[i].name = NULL;
                 sensor->vec[i].count = 0;
@@ -62,20 +62,20 @@ int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) 
         }
         sensor->vec[id - 1].name = malloc(strlen(name) + 1);
         strcpy(sensor->vec[id - 1].name, name);
-        if (sensor->vec[id - 1].name == NULL) {
+        if (sensor->vec[id - 1].name == NULL) {                                     // Verifica si nos quedamos sin memoria una vez agregamos un nuevo sensor
             return 1;
         }
     }
     return 0;
 }
 
-int addSensor(sensorsdataADT sensor, char * string) {
+int addSensor(sensorsdataADT sensor, char * string) {       // Lee el string dado y guarda la informacion correspondiente para luego guardarla en la estructura
     char * token;
     char fin[2] = ";";
 
-    token = strtok(string, fin);
+    token = strtok(string, fin);                            // Guarda los datos en un token desde el inicio del string hasta el ";"
 
-    int id = atoi(token);
+    int id = atoi(token);                                   // Guarda en una variable el valor del token
 
     token = strtok(NULL, fin);
     char * name = token;
@@ -83,21 +83,21 @@ int addSensor(sensorsdataADT sensor, char * string) {
     token = strtok(NULL, fin);
     char status = token[0];
 
-    if(status == 'A') {
-        return newSensor(sensor, id, name, status);
+    if(status == 'A') {         // Esto creo que esta de mas porque se chequea en newSensor
+        return newSensor(sensor, id, name, status);         // Llama a newSensor para agregar el sensor
     }
 
     return 0;
 }
 
-TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, int id, sensor * vec, int * flag) {
-    if(first == NULL || year > first->year) {
+TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, int id, sensor * vec, int * flag) {  // Agrega de forma recursiva los datos
+    if(first == NULL || year > first->year) {                                                                       // de las mediciones
         yearList * aux = malloc(sizeof(yearList));
         if(aux == NULL) {
             *flag = 1;
         }
         aux->year = year;
-        if(date[0] != 'S') {
+        if(date[0] != 'S') {        //Si el string inicia con "S" entonces es porque es alguno de los dos dias del fin de semana ("Saturday" o "Sunday")
             aux->countWeek = hourlyCounts;
             aux->countEnd = 0;
         } else {
@@ -121,14 +121,14 @@ TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, i
     return first;
 }
 
-int newYear(sensorsdataADT sensor, int year, char * date, int hourlyCounts, int id) {
+int newYear(sensorsdataADT sensor, int year, char * date, int hourlyCounts, int id) {   // Agrega los datos de las mediciones a la estructura
     int flag = 0;
     if(id<=sensor->size&&sensor->vec[id-1].name!=NULL)
         sensor->first = addYearRec(sensor->first, year, date, hourlyCounts, id, sensor->vec, &flag);
     return flag;
 }
 
-int addMeasurements( sensorsdataADT sensor, char * string ){
+int addMeasurements( sensorsdataADT sensor, char * string ){    // Lee el string y guarda los datos necesarios para luego agregarlos con otra funcion
     char * token;
     char fin[2] = ";";
 
@@ -153,7 +153,7 @@ int addMeasurements( sensorsdataADT sensor, char * string ){
     return newYear( sensor, year, date, Counts, id );
 }
 
-static int cmpPeopleAmount(const sensor * a,const sensor * b) {
+static int cmpPeopleAmount(const sensor * a,const sensor * b) { // Compara cual sensor tiene mayor cantidad de peatones que pasaron
     int c;
     if((c = b->count - a->count) == 0) { // Entonces definimos por nombre del sensor
         if(a->name != NULL && b->name != NULL) {
@@ -164,71 +164,71 @@ static int cmpPeopleAmount(const sensor * a,const sensor * b) {
     return c;
 }
 
-void orderByPeopleAmount(sensorsdataADT sensors) {
+void orderByPeopleAmount(sensorsdataADT sensors) {  // Ordena con qsort los sensores de forma descendente
     qsort(sensors->vec, sensors->size, sizeof(sensor),(int (*) (const void*,const void*))cmpPeopleAmount);
 }
 
-unsigned int getSensorSize(sensorsdataADT sensors) {
+unsigned int getSensorSize(sensorsdataADT sensors) {    // Devuelve la cantidad de sensores guardados
     return sensors->size;
 }
 
-char * getSensorName(sensorsdataADT sensors, int i) {
+char * getSensorName(sensorsdataADT sensors, int i) {   // Devuelve el nombre del sensor para la id dada
     return sensors->vec[i].name;
 }
 
-unsigned long int getPedestriansBySensor(sensorsdataADT sensor, int i) { // i >= 0
+unsigned long int getPedestriansBySensor(sensorsdataADT sensor, int i) {    // Devuelve la cantidad de personas que pasaron por el sensor de la id correspondiente
     if(sensor->vec[i].name != NULL) {
         return sensor->vec[i].count;
     }
     return 0;
 }
 
-int getYear(sensorsdataADT sensors) {
+int getYear(sensorsdataADT sensors) {   // Devuelve el anio en el que se encuentra el iterador
     return sensors->idx->year;
 }
 
-unsigned long int getWeekCount(sensorsdataADT sensors) {
+unsigned long int getWeekCount(sensorsdataADT sensors) {    // Devuelve la cantidad de personas que pasaron en la semana
     return sensors->idx->countWeek;
 }
 
 
-unsigned long int getCountEnd(sensorsdataADT sensors) {
+unsigned long int getCountEnd(sensorsdataADT sensors) {     // Devuelve la cantidad de personas que pasaron el fin de semana
     return sensors->idx->countEnd;
 }
 
-unsigned long int getTotalCount(sensorsdataADT sensors) {
+unsigned long int getTotalCount(sensorsdataADT sensors) {   // Devuelve el total de personas que pasaron
     return sensors->idx->countEnd + sensors->idx->countWeek;
 }
 
 //Iterador
-void toBegin(sensorsdataADT sensors) {
+void toBegin(sensorsdataADT sensors) {  // Inicia el iterador en el principio de la lista
     for(int i = 0; i < sensors->size; i++) {
         sensors->idx = sensors->first;
     }
 }
 
-int hasNext(sensorsdataADT sns) {
+int hasNext(sensorsdataADT sns) {   // Devuelve 0 si el iterador no tiene un elemento que lo sigue
     return sns->idx != NULL;
 }
 
-void next(sensorsdataADT sns) {
+void next(sensorsdataADT sns) { // Mueve el iterador al elemento siguiente de la lista
     sns->idx = sns->idx->tail;
 }
 
 // Query 3
 
 #define DAYS_IN_YEAR 365
-int isLeap(int year){//Checkea si un anio es bisiesto
+int isLeap(int year){   //Checkea si un anio es bisiesto
     if(year%100==0)
         return(year%400==0);
     return(year%4==0);
 }
 
-long double getYearAvg(sensorsdataADT sns) {
+long double getYearAvg(sensorsdataADT sns) {    // Devuelve el promedio de personas que pasaron por anio
     return ((long double) sns->idx->countWeek+sns->idx->countEnd) / (DAYS_IN_YEAR+isLeap(sns->idx->year));
 }
 
-static void freeRec(yearList * years) {
+static void freeRec(yearList * years) {     // Libera la memoria utilizada en la lista de anios
     if(years == NULL) {
         return;
     }
@@ -236,7 +236,7 @@ static void freeRec(yearList * years) {
     free(years);
 }
 
-void freeAll(sensorsdataADT sensors) {
+void freeAll(sensorsdataADT sensors) {      // Libera la memoria utilizada en toda la estructura
     freeRec(sensors->first);
     for(int i=0;i<sensors->size;i++){
         free(sensors->vec[i].name);
