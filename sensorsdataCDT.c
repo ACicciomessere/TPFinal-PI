@@ -21,7 +21,7 @@ typedef struct sensorsdataCDT {
     yearList *idx; //iterador
 } sensorsdataCDT;
 
-sensorsdataADT newsensorsdataADT(){
+sensorsdataADT newSensorsdataADT(){
     return calloc( 1, sizeof( sensorsdataCDT ) );
 }
 
