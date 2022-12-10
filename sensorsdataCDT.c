@@ -155,9 +155,9 @@ int addMeasurements( sensorsdataADT sensor, char * string ){
 
 static int cmpPeopleAmount(const sensor * a,const sensor * b) {
     int c;
-    if((c = a->count - b->count) == 0) { // Entonces definimos por nombre del sensor
+    if((c = b->count - a->count) == 0) { // Entonces definimos por nombre del sensor
         if(a->name != NULL && b->name != NULL) {
-            return strcasecmp(a->name, b->name);
+            return strcasecmp(b->name,a->name);
         }
         // en el caso de que ambos sean NULL entonces retorna 0 ya que da igual el orden entre ambos sensores, misma situacion en el caso de que alguno de los 2 sea NULL debido a que a la hora de obtener cualquier tipo de informacion no seran tomados en cuenta aquellos sensores cuyo nombre este en NULL
     }
