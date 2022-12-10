@@ -51,7 +51,7 @@ void itoaAux(int n, char s[]){
     reverse(s, 0, i-1);
 }
 
-void itoaAux2(int n, char s[]){
+void itoaAux2( long double n, char s[]){
     int i, sign;
     if(( sign = n ) < 0 )
         n = -n;
@@ -59,12 +59,12 @@ void itoaAux2(int n, char s[]){
     do{
         s[i++] = n%10 + '0';
     }while((n /=  10) > 0);
+    n *= 100;
     if(sign < 0)
         s[i++] = '-';
     s[i] = '\0';
     reverse(s, 0, i-1);
     s[i++] = '.';
-    n*= 100;
     for( int j = 0; j < 2; j++ ){
         s[i++] = n%10 + '0';
     }
