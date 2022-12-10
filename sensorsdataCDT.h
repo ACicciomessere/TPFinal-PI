@@ -85,7 +85,7 @@ void next(sensorsdataADT sensors);
 /*
 Retorna la cantidad total de peatones que se registraron en un anio completo dividido la cantidad de dias del anio. (i >= 0).
 */
-long double getYearAvg(sensorsdataADT sns); //double no puede ser unsigned lmao
+long double getYearAvg(sensorsdataADT sns);
 
 /*
 Libera toda la memoria reservada en el heap
