@@ -14,10 +14,6 @@ void itoaAux(int n, char s[]);
 
 sensorsdataADT newSensorsDataADT(void);
 
-int addSensor(sensorsdataADT sensor, char * string);
-
-int addMeasurements( sensorsdataADT sensor, char * string );
-
 // Query 1
 
 /*
@@ -78,6 +74,16 @@ int hasNext(sensorsdataADT sensors);
 Actualiza la posicion del elemento en el cual estamos parados
 */
 void next(sensorsdataADT sensors);
+
+/*
+Funcion que se utiliza para agregar la informacion de un sensor.
+*/
+int addSensor(sensorsdataADT sensor, char * string);
+
+/*
+Funcion que se utiliza para agregar la informacion de una medida. El dia de la semana debe estar en ingles.
+*/
+int addMeasurements( sensorsdataADT sensor, char * string );
 
 // Query 3
 /*
