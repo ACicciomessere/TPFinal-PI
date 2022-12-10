@@ -8,7 +8,6 @@
 #define MAX_LEN 128
 #define MAX_DIG 11
 typedef struct sensorsdataCDT* sensorsdataADT;
-typedef struct years*yList;
 
 void itoaAux(int n, char s[]);
 
