@@ -97,7 +97,7 @@ int main( int argCant, char * args[] ) {
         yearAvg = getYearAvg(sensors);
         fprintf( query3, "%i;%.2Lf\n", year, yearAvg);   //sensors->idx->year;getYearAvg(sensors->idx)
         itoaAux(year, sAux);
-        itoaAux(yearAvg, sAux2);
+        itoaAux2(yearAvg, sAux2);
         addHTMLRow(htmlQ3, sAux, sAux2 );
         next(sensors);
     }
