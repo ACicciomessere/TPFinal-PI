@@ -81,10 +81,10 @@ int main(int argCant, char * args[]) {
         endCount = getCountEnd(sensors);
         totalCount = getTotalCount(sensors);
         fprintf( query2, "%i;%lu;%lu;%lu\n", year , weekCount , endCount, totalCount );//Print directo al archivo .csv
-        itoaAux(year, sAux); //Parseo de datos a string
-        itoaAux(weekCount, sAux2);
-        itoaAux(endCount, sAux3);
-        itoaAux(totalCount, sAux4);
+        sprintf(sAux,"%d",year); //Parseo de datos a string
+        sprintf(sAux2,"%lu",weekCount);
+        sprintf(sAux3,"%lu",endCount);
+        sprintf(sAux4,"%lu",totalCount);
         addHTMLRow(htmlQ2, sAux, sAux2, sAux3, sAux4 ); //Print a las columnas de la tabla del archivo .html
         next(sensors);
     }
@@ -99,7 +99,7 @@ int main(int argCant, char * args[]) {
         year = getYear(sensors);
         yearAvg = getYearAvg(sensors);
         fprintf( query3, "%i;%.2Lf\n", year, yearAvg);//Mismo comportamiento que el query 2
-        itoaAux(year, sAux);
+        sprintf(sAux,"%d",year);
         sprintf(sAux2,"%.2Lf",yearAvg);
         addHTMLRow(htmlQ3, sAux, sAux2 );
         next(sensors);
