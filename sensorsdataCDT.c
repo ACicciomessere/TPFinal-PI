@@ -50,7 +50,7 @@ void itoaAux(int n, char s[]){   // Funcion para converitr un valor de tipo int 
     reverse(s, 0, i-1);          // Finalmente lo invierte para que quede el numero como corresponde
 }
 
-int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) {   // Agrega a la estructura los datos de un nuevo sensor
+int newSensor(sensorsdataADT sensor, unsigned int id, char * name) {   // Agrega a la estructura los datos de un nuevo sensor
     if (sensor->size < id) {                                                        // aumentando el espacio conforme se va necesitando
         sensor->vec = realloc(sensor->vec, sizeof(sensor->vec[0]) * id);        
         for (int i = sensor->size; i < id; i++) {
@@ -82,7 +82,7 @@ int addSensor(sensorsdataADT sensor, char * string) {       // Lee el string dad
     char status = token[0];
 
     if(status == 'A') {         // Chequea que no agregue un sensor que se encuentra removido
-        return newSensor(sensor, id, name, status);         // Llama a newSensor para agregar el sensor
+        return newSensor(sensor, id, name);         // Llama a newSensor para agregar el sensor
     }
 
     return 0;
