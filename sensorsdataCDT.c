@@ -225,7 +225,7 @@ int isLeap(int year){//Checkea si un anio es bisiesto
 }
 
 long double getYearAvg(sensorsdataADT sns) {//TODO: Creo que lo podriamos hacer long float, porque la precision del double es para muchos decimales, si mal no entendi intro info
-    return (long double) ( (sns->idx->countWeek+sns->idx->countEnd)/DAYS_IN_YEAR+isLeap(sns->idx->year) );
+    return (long double) ( (sns->idx->countWeek+sns->idx->countEnd) / (DAYS_IN_YEAR+isLeap(sns->idx->year) ) );
 }
 
 static void freeRec(yearList * years) {
