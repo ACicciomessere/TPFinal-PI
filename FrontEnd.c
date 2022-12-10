@@ -51,7 +51,7 @@ int main(int argCant, char * args[]) {
     fputs("Year;Pedestrians_Avg\n", query3);
 
     char sAux[MAX_DIG]; // Se crea un vector de chars para guardar los numeros en strings ya que es necesario para el .html
-    char sAux2[MAX_DIG]; //Se reutilizan para no utilizar mas meoria de la necesaria
+    char sAux2[MAX_DIG]; //Se reutilizan para no utilizar mas memoria de la necesaria
     char sAux3[MAX_DIG];
     char sAux4[MAX_DIG];
 
