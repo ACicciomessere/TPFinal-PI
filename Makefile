@@ -1,7 +1,7 @@
 COMPILER=gcc
 OUTPUT_FILE=pedestrians
 FLAGS=-pedantic -std=c99
-DEBUG_COMPILER=-g -Wall -fsanitize=address -DDEBUG=1
+DEBUG_COMPILER= -Wall -fsanitize=address -DDEBUG=1
 
 QUERY=query1.csv query2.csv query3.csv query1.html query2.html query3.html
 
