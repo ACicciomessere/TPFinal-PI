@@ -43,7 +43,7 @@ void itoaAux(int n, char s[]){
         n = -n;
     i = 0;
     do{
-        s[i++] = n%10.0 + '0';
+        s[i++] = n%10 + '0';
     }while((n /=  10) > 0);
     if(sign < 0)
         s[i++] = '-';
@@ -57,7 +57,7 @@ void itoaAux2( long double n, char s[]){
         n = -n;
     i = 0;
     do{
-        s[i++] = n%10 + '0';
+        s[i++] = n%10.0 + '0';
     }while((n /=  10) > 0);
     n *= 100;
     if(sign < 0)
@@ -66,7 +66,7 @@ void itoaAux2( long double n, char s[]){
     reverse(s, 0, i-1);
     s[i++] = '.';
     for( int j = 0; j < 2; j++ ){
-        s[i++] = n%10 + '0';
+        s[i++] = n%10.0 + '0';
     }
     s[i] = '\0';
 }
