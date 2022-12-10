@@ -9,7 +9,7 @@ back.o: sensorsdataCDT.c
 		$(COMPILER) -c sensorsdataCDT.c -o back.o
 
 all:	back.o
-		$(COMPILER) -o $(OUTPUT_FILE) FrontEnd.c htmlTable.c back.o $(FLAGS)
+		$(COMPILER) -o $(OUTPUT_FILE) FrontEnd.c htmlTable.c back.o $(FLAGS) $(DEBUG_COMPILER)
 
 debug: COMPILER+=$(DEBUG_COMPILER)
 debug: all
