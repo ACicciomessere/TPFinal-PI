@@ -17,18 +17,18 @@ typedef struct sensor {
 typedef struct sensorsdataCDT {
     sensor * vec;
     unsigned int size; // Cantidad de memoria reservada en el heap para el vector de sensores
-    yearList *first; //Lista recursiva donde se almacenan cuantos peatones se registraron en un anio, en un momento particular de la semana. Ordenada en forma desc.
-    yearList *idx; //iterador
+    yearList *first; //Lista donde se almacenan cuantos peatones se registraron en un mismo anio, en un momento particular de la semana. Ordenada en forma desc.
+    yearList *idx; //Un iterador para mayor eficiencia a la hora de realizar las funciones relacionadas al query 2 y 3
 } sensorsdataCDT;
 
-sensorsdataADT newSensorsDataADT(){   // Funcion para crear el espacio que va a ocupar inicialmente la estructura
+sensorsdataADT newSensorsDataADT(){   // Funcion para reservar en el heap el espacio que va a ocupar inicialmente la estructura
     return calloc( 1, sizeof( sensorsdataCDT ) );
 }
 
 int newSensor(sensorsdataADT sensor, unsigned int id, char * name) {   // Agrega a la estructura los datos de un nuevo sensor
     if (sensor->size < id) {                                                        // aumentando el espacio conforme se va necesitando
         sensor->vec = realloc(sensor->vec, sizeof(sensor->vec[0]) * id);        
-        for (int i = sensor->size; i < id; i++) {                       //Setea los nombres de los sensores intermedios a NULL, para saber que si un sensor es NULL, esta Retirado
+        for (int i = sensor->size; i < id; i++) {                       //Setea los nombres de los sensores intermedios a NULL, para saber que si un sensor es NULL, esta removido
             sensor->vec[i].name = NULL;
             sensor->vec[i].count = 0;
         }
@@ -77,7 +77,7 @@ TYearList addYearRec(yearList * first, int year,char * date, int hourlyCounts, i
             aux->countEnd = hourlyCounts;
             aux->countWeek = 0;
         }
-        vec[id - 1].count += hourlyCounts;
+        vec[id - 1].count += hourlyCounts; // Se actualiza la cantidad de peatones registrados por un sensor en el vector correspondiente
         aux->tail = first;
         return aux;
     }
@@ -126,10 +126,10 @@ int addMeasurements( sensorsdataADT sensor, char * string ){    // Lee el string
     return newYear( sensor, year, date, Counts, id );
 }
 
-static int cmpPeopleAmount(const sensor * a,const sensor * b) { // Compara cual sensor tiene mayor cantidad de peatones que pasaron
+static int cmpPeopleAmount(const sensor * a,const sensor * b) { // Compara cual sensor registro mayor cantidad de peatones
     int c;
-    if((c = b->count - a->count) == 0) { // Entonces definimos por nombre del sensor
-        if(a->name != NULL && b->name != NULL) {
+    if((c = b->count - a->count) == 0) { 
+        if(a->name != NULL && b->name != NULL) { // Entonces definimos por nombre del sensor, es decir alfabeticamente
             return strcasecmp(a->name,b->name);
         }
         // en el caso de que ambos sean NULL entonces retorna 0 ya que da igual el orden entre ambos sensores, misma situacion en el caso de que alguno de los 2 sea NULL debido a que a la hora de obtener cualquier tipo de informacion no seran tomados en cuenta aquellos sensores cuyo nombre este en NULL
@@ -145,7 +145,7 @@ unsigned int getSensorSize(sensorsdataADT sensors) {    // Devuelve la cantidad 
     return sensors->size;
 }
 
-char * getSensorName(sensorsdataADT sensors, int i) {   // Devuelve el nombre del sensor para la id dada
+char * getSensorName(sensorsdataADT sensors, int i) {   // Devuelve el nombre del sensor para la id dada, recordar que i >= 0
     return sensors->vec[i].name;
 }
 
