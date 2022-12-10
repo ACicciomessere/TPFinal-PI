@@ -56,7 +56,7 @@ int main( int argCant, char * args[] ) {
 
     //Query 1
     orderByPeopleAmount(sensors);
-    htmlTable htmlQ1 = newTable("query1", 2, "Sensor", "Pedestrians");
+    htmlTable htmlQ1 = newTable("query1.html", 2, "Sensor", "Pedestrians");
     for(int i = 0; i < sensorSize; i++) {
         char * name = getSensorName(sensors, i);
         if(name != NULL) {
@@ -70,7 +70,7 @@ int main( int argCant, char * args[] ) {
 
     //Query 2
     toBegin(sensors);
-    htmlTable htmlQ2 = newTable("query2", 4, "Year", "Weekdays_Count", "Weekends_Count", "Total_Count");
+    htmlTable htmlQ2 = newTable("query2.html", 4, "Year", "Weekdays_Count", "Weekends_Count", "Total_Count");
     int year;
     unsigned long int weekCount, endCount, totalCount;
     while(hasNext(sensors)){   //TODO: Esto solo funciona si la toma de datos te arma la yearList en forma DESCENDIENTE
@@ -91,7 +91,7 @@ int main( int argCant, char * args[] ) {
     //Query 3
     toBegin(sensors);
     long double yearAvg;
-    htmlTable htmlQ3 = newTable("query3", 2, "Year", "Pedestrians_Avg");
+    htmlTable htmlQ3 = newTable("query3.html", 2, "Year", "Pedestrians_Avg");
     while(hasNext(sensors)){
         year = getYear(sensors);
         yearAvg = getYearAvg(sensors);
