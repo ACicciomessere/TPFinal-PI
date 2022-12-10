@@ -63,7 +63,7 @@ int main(int argCant, char * args[]) {
         if(name != NULL) {
             unsigned long int totalPedestrians = getPedestriansBySensor(sensors, i);
             fprintf( query1, "%s;%lu\n", name, totalPedestrians );      // Imprime linea por linea en el .csv
-            itoaAux(totalPedestrians, sAux);    // Pasa el valor de total de personas a string
+            sprintf(sAux,"%lu",totalPedestrians);    // Pasa el valor de total de personas a string
             addHTMLRow(htmlQ1, name, sAux );    // Agrega fila por fila los datos en el .html
         }
     }
