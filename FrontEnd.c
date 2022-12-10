@@ -2,46 +2,46 @@
 
 static void memError(void);
 
-int main( int argCant, char * args[] ) {
-    if( argCant != 3 && argCant != 7 ){//!=3||!=7 es una tautologia. Quiciste decir &&?
+int main(int argCant, char * args[]) {
+    if(argCant != 3 && argCant != 7) {
         fprintf( stderr, "ERROR en cantidad de datos introducidos\n" );
         exit(1);
     }
 
-    FILE * mediciones = fopen( args[1], "r" );
-    FILE * sensores = fopen( args[2], "r" );
+    FILE * mediciones = fopen(args[1], "r");
+    FILE * sensores = fopen(args[2], "r");
 
-    if( sensores == NULL || mediciones == NULL ){
-        fprintf( stderr,"ERROR en encontrar los datos\n" );
+    if(sensores == NULL || mediciones == NULL) {
+        fprintf(stderr,"ERROR en encontrar los datos\n");
         exit(2);
     }
 
     sensorsdataADT sensors = newSensorsDataADT();
-    if( sensors == NULL ){
+    if(sensors == NULL) {
         memError();
     }
 
     char currLine[ MAX_LEN ];
-    fgets( currLine, MAX_LEN, sensores );
-    while( fgets( currLine, MAX_LEN, sensores ) ){
-        if( addSensor(sensors, currLine) )
+    fgets(currLine, MAX_LEN, sensores );
+    while(fgets( currLine, MAX_LEN, sensores)) {
+        if(addSensor(sensors, currLine))
             memError();
     }
-    fclose( sensores );
+    fclose(sensores);
 
-    fgets( currLine, MAX_LEN, mediciones );
-    while( fgets( currLine, MAX_LEN, mediciones ) ){
-        if( addMeasurements(sensors, currLine) )
+    fgets(currLine, MAX_LEN, mediciones);
+    while(fgets( currLine, MAX_LEN, mediciones)) {
+        if(addMeasurements(sensors, currLine))
             memError();
     }
-    fclose( mediciones );
+    fclose(mediciones);
 
     unsigned int sensorSize = getSensorSize(sensors);
 
     FILE * query1 = fopen("query1.csv", "wt");
     FILE * query2 = fopen("query2.csv", "wt");
     FILE * query3 = fopen("query3.csv", "wt");
-    if(query1 == NULL || query2 == NULL || query3 == NULL){
+    if(query1 == NULL || query2 == NULL || query3 == NULL) {
         fprintf(stderr, "ERROR: No se creo alguno de los archivos o no se lee");
         exit(3);
     }
@@ -61,7 +61,7 @@ int main( int argCant, char * args[] ) {
         char * name = getSensorName(sensors, i);
         if(name != NULL) {
             unsigned long int totalPedestrians = getPedestriansBySensor(sensors, i);
-            fprintf( query1, "%s;%lu\n", name, totalPedestrians );   //TODO: name;sensors->vec[i].count
+            fprintf( query1, "%s;%lu\n", name, totalPedestrians );
             itoaAux(totalPedestrians, sAux);
             addHTMLRow(htmlQ1, name, sAux );
         }
@@ -73,12 +73,12 @@ int main( int argCant, char * args[] ) {
     htmlTable htmlQ2 = newTable("query2.html", 4, "Year", "Weekdays_Count", "Weekends_Count", "Total_Count");
     int year;
     unsigned long int weekCount, endCount, totalCount;
-    while(hasNext(sensors)){   //TODO: Esto solo funciona si la toma de datos te arma la yearList en forma DESCENDIENTE
+    while(hasNext(sensors)){
         year = getYear(sensors);
         weekCount = getWeekCount(sensors);
         endCount = getCountEnd(sensors);
         totalCount = getTotalCount(sensors);
-        fprintf( query2, "%i;%lu;%lu;%lu\n", year , weekCount , endCount, totalCount );  //sensors->idx->year;sensors->idx->countWeek;sensors->idx->countEnd;sensors->idx->countEnd+sensors->idx->countWeek
+        fprintf( query2, "%i;%lu;%lu;%lu\n", year , weekCount , endCount, totalCount );
         itoaAux(year, sAux);
         itoaAux(weekCount, sAux2);
         itoaAux(endCount, sAux3);
@@ -95,7 +95,7 @@ int main( int argCant, char * args[] ) {
     while(hasNext(sensors)){
         year = getYear(sensors);
         yearAvg = getYearAvg(sensors);
-        fprintf( query3, "%i;%.2Lf\n", year, yearAvg);   //sensors->idx->year;getYearAvg(sensors->idx)
+        fprintf( query3, "%i;%.2Lf\n", year, yearAvg);
         itoaAux(year, sAux);
         itoaAux2(yearAvg, sAux2);
         addHTMLRow(htmlQ3, sAux, sAux2 );
