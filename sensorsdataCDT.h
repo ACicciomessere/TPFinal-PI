@@ -12,7 +12,7 @@ typedef struct years*yList;
 
 void itoaAux(int n, char s[]);
 
-void itoaAux2(int n, char s[]);
+void itoaAux2(long double n, char s[]);
 
 sensorsdataADT newSensorsDataADT(void);
 
