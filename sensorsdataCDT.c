@@ -53,12 +53,11 @@ void itoaAux(int n, char s[]){
 
 void itoaAux2( long double n, char s[]){
     int i, sign;
-    long double ten = 10;
     if(( sign = n ) < 0 )
         n = -n;
     i = 0;
     do{
-        s[i++] = n%ten + '0';
+        s[i++] = n%( (long double) 10 ) + '0';
     }while((n /=  10) > 0);
     n *= 100;
     if(sign < 0)
@@ -67,7 +66,7 @@ void itoaAux2( long double n, char s[]){
     reverse(s, 0, i-1);
     s[i++] = '.';
     for( int j = 0; j < 2; j++ ){
-        s[i++] = n%ten + '0';
+        s[i++] = n%( (long double) 10 ) + '0';
     }
     s[i] = '\0';
 }
