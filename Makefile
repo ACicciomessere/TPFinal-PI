@@ -25,4 +25,4 @@ cleancsv:
 		rm *.csv
 		
 cleanAll:
-		rm $(QUERY) $(OUTPUT_FILE)
+		rm $(QUERY) $(OUTPUT_FILE) back.o
