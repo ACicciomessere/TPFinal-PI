@@ -51,6 +51,26 @@ void itoaAux(int n, char s[]){
     reverse(s, 0, i-1);
 }
 
+void itoaAux2(int n, char s[]){
+    int i, sign;
+    if(( sign = n ) < 0 )
+        n = -n;
+    i = 0;
+    do{
+        s[i++] = n%10 + '0';
+    }while((n /=  10) > 0);
+    if(sign < 0)
+        s[i++] = '-';
+    s[i] = '\0';
+    reverse(s, 0, i-1);
+    s[i++] = '.';
+    n*= 100;
+    for( int j = 0; j < 2; j++ ){
+        s[i++] = n%10 + '0';
+    }
+    s[i] = '\0';
+}
+
 int newSensor(sensorsdataADT sensor, unsigned int id, char * name, char status) {
     if(status=='A') {
         if (sensor->size < id) {
